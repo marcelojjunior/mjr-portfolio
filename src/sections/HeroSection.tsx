@@ -106,9 +106,9 @@ export function HeroSection() {
           >
             {t('hero.ctaProjects')}
           </Button>
-          <Button variant="outline" href="/cv.pdf" download>
+          {/* <Button variant="outline" href="/cv.pdf" download>
             {t('hero.ctaCv')}
-          </Button>
+          </Button> */}
         </motion.div>
       </motion.div>
     </section>
