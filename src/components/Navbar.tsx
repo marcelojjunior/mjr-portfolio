@@ -31,7 +31,7 @@ export function Navbar() {
         NAV_HEIGHT,
       )}
     >
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <a
           href={`#${SECTION_IDS.hero}`}
           className="text-fg focus-visible:ring-ring-focus font-mono text-sm font-semibold tracking-tight focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none"
@@ -121,7 +121,7 @@ export function Navbar() {
         )}
       >
         <nav
-          className="mx-auto flex max-w-6xl flex-col px-4 py-3"
+          className="mx-auto flex max-w-7xl flex-col px-4 py-3"
           aria-label={t('a11y.mainNav')}
         >
           {NAV_ITEMS.map((item) => (

@@ -21,7 +21,7 @@ export const ptBR = {
     terminalOutput: 'Desenvolvedor Full Stack (Mobile · Backend · Frontend)',
     badge: 'disponível para oportunidades',
     headline: 'olá, eu sou',
-    name: 'Seu Nome',
+    name: 'Marcelo Junior',
     roleLine: '// construindo produtos digitais escaláveis e centrados no usuário',
     description:
       'Projeto e construo soluções digitais ponta a ponta — da arquitetura de backend a aplicações mobile e web, com foco em performance, escalabilidade e experiência do usuário.',
@@ -97,7 +97,6 @@ export const ptBR = {
   stack: {
     title: 'Stack',
     subtitle: 'Ferramentas que uso para entregar ponta a ponta.',
-    primaryLabel: 'Foco principal',
     groups: {
       mobile: 'Mobile',
       backend: 'Backend',
@@ -107,21 +106,23 @@ export const ptBR = {
   },
   contact: {
     title: 'Contato',
-    subtitle: 'Envie uma mensagem — estilo terminal.',
-    prompt: '$ mail -s "portfolio" you@example.com',
-    name: 'Nome',
-    email: 'E-mail',
-    message: 'Mensagem',
-    send: 'Executar envio',
-    sending: 'transmitindo…',
-    success: 'mensagem enfileirada (demo — sem servidor)',
-    errors: {
-      name: 'Nome obrigatório',
-      email: 'E-mail válido obrigatório',
-      message: 'Mensagem obrigatória',
+    subtitle: 'Canais diretos — sem formulário.',
+    emailAria: 'Enviar e-mail para Marcelo Junior',
+    externalAria: 'Abre em uma nova aba',
+    cards: {
+      email: {
+        title: 'E-mail',
+        action: 'Enviar e-mail',
+      },
+      github: {
+        title: 'GitHub',
+        action: 'Ver perfil',
+      },
+      linkedin: {
+        title: 'LinkedIn',
+        action: 'Abrir perfil',
+      },
     },
-    terminalOk: 'OK',
-    terminalErr: 'ERR',
   },
   footer: {
     rights: 'Todos os direitos reservados.',

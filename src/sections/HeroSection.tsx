@@ -48,7 +48,7 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
     >
       <motion.div
-        className="mx-auto max-w-6xl px-4 sm:px-6"
+        className="mx-auto max-w-7xl px-4 sm:px-6"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"

@@ -19,7 +19,7 @@ export const en = {
     terminalOutput: 'Full Stack Developer (Mobile · Backend · Frontend)',
     badge: 'available for opportunities',
     headline: "hey, I'm",
-    name: 'Your Name',
+    name: 'Marcelo Junior',
     roleLine: '// building scalable and user-focused digital products',
     description:
       'I design and build end-to-end digital solutions — from backend architecture to mobile and web applications, focusing on performance, scalability, and user experience.',
@@ -95,7 +95,6 @@ export const en = {
   stack: {
     title: 'Stack',
     subtitle: 'Tools I use to ship end-to-end.',
-    primaryLabel: 'Primary focus',
     groups: {
       mobile: 'Mobile',
       backend: 'Backend',
@@ -105,21 +104,23 @@ export const en = {
   },
   contact: {
     title: 'Contact',
-    subtitle: 'Send a message — terminal style.',
-    prompt: '$ mail -s "portfolio" you@example.com',
-    name: 'Name',
-    email: 'Email',
-    message: 'Message',
-    send: 'Execute send',
-    sending: 'transmitting…',
-    success: 'message queued (demo — no server attached)',
-    errors: {
-      name: 'Name is required',
-      email: 'Valid email required',
-      message: 'Message is required',
+    subtitle: 'Direct channels — no form.',
+    emailAria: 'Send email to Marcelo Junior',
+    externalAria: 'Opens in a new tab',
+    cards: {
+      email: {
+        title: 'Email',
+        action: 'Send email',
+      },
+      github: {
+        title: 'GitHub',
+        action: 'View profile',
+      },
+      linkedin: {
+        title: 'LinkedIn',
+        action: 'Open profile',
+      },
     },
-    terminalOk: 'OK',
-    terminalErr: 'ERR',
   },
   footer: {
     rights: 'All rights reserved.',

@@ -46,30 +46,13 @@ export const EXPERIENCE: ExperienceItem[] = [
   },
 ]
 
-export const PRIMARY_TECH = new Set([
-  'React',
-  'TypeScript',
-  'Node.js',
-  'React Native',
-  'PostgreSQL',
-])
-
 export const STACK_GROUPS: StackGroup[] = [
-  {
-    id: 'mobile',
-    labelKey: 'stack.groups.mobile',
-    items: ['React Native', 'Expo', 'Flutter'],
-  },
-  {
-    id: 'backend',
-    labelKey: 'stack.groups.backend',
-    items: ['Node.js', 'PostgreSQL', 'MySQL', 'PHP', 'Laravel', 'Docker'],
-  },
   {
     id: 'frontend',
     labelKey: 'stack.groups.frontend',
     items: [
       'React',
+      'Next.js',
       'JavaScript',
       'TypeScript',
       'HTML',
@@ -79,8 +62,26 @@ export const STACK_GROUPS: StackGroup[] = [
     ],
   },
   {
+    id: 'backend',
+    labelKey: 'stack.groups.backend',
+    items: [
+      'Firebase',
+      'WordPress',
+      'PHP',
+      'Laravel',
+      'Docker',
+      'Node.js',
+      'MySQL',
+    ],
+  },
+  {
+    id: 'mobile',
+    labelKey: 'stack.groups.mobile',
+    items: ['React Native', 'Expo'],
+  },
+  {
     id: 'tools',
     labelKey: 'stack.groups.tools',
-    items: ['Git', 'GitLab', 'Linux', 'macOS'],
+    items: ['Git', 'GitHub', 'GitLab', 'Vercel', 'Linux', 'macOS'],
   },
 ]

@@ -13,7 +13,7 @@ export function ExperienceSection() {
 
   return (
     <SectionReveal id={SECTION_IDS.experience}>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           title={t('experience.title')}
           subtitle={t('experience.subtitle')}

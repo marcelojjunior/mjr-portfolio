@@ -21,10 +21,10 @@ type ButtonProps = ButtonAsButton | ButtonAsAnchor
 
 const variantClass: Record<NonNullable<Base['variant']>, string> = {
   primary:
-    'border border-accent/40 bg-accent-soft text-fg shadow-[0_0_24px_-8px_var(--accent)] hover:border-accent/70',
+    'border border-accent/40 bg-accent-soft text-fg hover:border-accent/70',
   ghost: 'border border-transparent text-fg-muted hover:border-border hover:text-fg',
   outline:
-    'border border-border bg-surface-elevated/60 text-fg hover:border-accent/50 hover:shadow-[0_0_20px_-10px_var(--accent)]',
+    'border border-border bg-surface-elevated/60 text-fg hover:border-accent/50',
 }
 
 const baseClass =

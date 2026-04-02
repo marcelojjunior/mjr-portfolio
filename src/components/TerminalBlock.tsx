@@ -9,7 +9,7 @@ export function TerminalBlock({ lines, className }: TerminalBlockProps) {
   return (
     <div
       className={cn(
-        'border-border bg-surface-elevated/80 rounded-md border p-4 font-mono text-sm shadow-inner',
+        'border-border bg-surface-elevated/80 rounded-md border p-4 font-mono text-sm',
         className,
       )}
       role="figure"

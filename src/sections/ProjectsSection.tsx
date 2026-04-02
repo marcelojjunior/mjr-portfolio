@@ -16,7 +16,7 @@ export function ProjectsSection() {
 
   return (
     <SectionReveal id={SECTION_IDS.projects}>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           title={t('projects.title')}
           subtitle={t('projects.subtitle')}
@@ -39,9 +39,7 @@ export function ProjectsSection() {
               >
                 <Card
                   className={`flex h-full flex-col p-6 ${
-                    project.featured
-                      ? 'border-accent/45 shadow-[0_0_40px_-16px_var(--accent)]'
-                      : ''
+                    project.featured ? 'border-accent/45' : ''
                   }`}
                 >
                   <div className="mb-3 flex flex-wrap items-center gap-2">
