@@ -27,7 +27,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'border-border bg-surface/85 supports-[backdrop-filter]:bg-surface/70 sticky top-0 z-50 border-b backdrop-blur-md',
+        'border-border bg-surface/85 supports-backdrop-filter:bg-surface/70 sticky top-0 z-50 border-b backdrop-blur-md',
         NAV_HEIGHT,
       )}
     >
