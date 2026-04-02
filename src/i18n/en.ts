@@ -70,20 +70,60 @@ export const en = {
     title: 'Experience',
     subtitle: 'Roles focused on scale, performance, and delivery.',
     items: {
-      acme: {
-        company: 'ACME Labs',
-        role: 'Senior Full Stack Engineer',
-        period: '2022 — Present',
+      soulloop: {
+        company: 'Soulloop',
+        role: 'Software Engineer',
+        period: 'October 2025 — Present',
+        workModel: 'Remote',
+        location: 'São Paulo, SP',
         bullets: [
           'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
           'Led frontend architecture improvements using React and TypeScript',
           'Introduced Docker-based environments to standardize deployments',
         ],
       },
-      north: {
-        company: 'Northwind Systems',
-        role: 'Full Stack Developer',
-        period: '2019 — 2022',
+      buzzveltech: {
+        company: 'Buzzvel',
+        role: 'Tech Manager',
+        period: 'March 2025 — October 2025',
+        workModel: 'Remote',
+        location: 'Lisbon, Portugal',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      buzzveldev: {
+        company: 'Buzzvel',
+        role: 'Software Engineer',
+        period: 'November 2022 — February 2025',
+        workModel: 'Remote',
+        location: 'Lisbon, Portugal',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      produtecnica: {
+        company: 'Grupo Produtécnica',
+        role: 'IT Assistant',
+        period: 'February 2022 — July 2022',
+        workModel: 'On-site',
+        location: 'Balsas, MA',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      contabilize: {
+        company: 'Contabilize Contabilidade',
+        role: 'IT Assistant',
+        period: 'January 2021 — January 2022',
+        workModel: 'On-site',
+        location: 'Balsas, MA',
         bullets: [
           'Built and maintained Laravel and MySQL services for B2B clients',
           'Delivered React Native modules used by mobile sales teams',

@@ -15,6 +15,8 @@ export type ExperienceItem = {
   companyKey: string
   roleKey: string
   periodKey: string
+  workModelKey: string
+  locationKey: string
   /** i18n path to string[] e.g. experience.items.acme.bullets */
   bulletsPath: string
 }

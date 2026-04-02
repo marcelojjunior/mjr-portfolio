@@ -34,10 +34,14 @@ export function ExperienceSection() {
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                     <div>
                       <h3 className="text-fg text-lg font-semibold">
-                        {t(job.companyKey)}
+                        {t(job.roleKey)}
                       </h3>
                       <p className="text-accent font-mono text-sm">
-                        {t(job.roleKey)}
+                        {t(job.companyKey)}
+                        {' · '}
+                        {t(job.workModelKey)}
+                        {' · '}
+                        {t(job.locationKey)}
                       </p>
                     </div>
                     <p className="text-fg-muted font-mono text-xs sm:text-sm">

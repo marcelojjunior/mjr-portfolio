@@ -72,20 +72,60 @@ export const ptBR = {
     title: 'Experiência',
     subtitle: 'Funções com foco em escala, performance e entrega.',
     items: {
-      acme: {
-        company: 'ACME Labs',
-        role: 'Engenheiro Full Stack Sênior',
-        period: '2022 — Presente',
+      soulloop: {
+        company: 'Soulloop',
+        role: 'Software Engineer',
+        period: 'Outubro 2025 — Presente',
+        workModel: 'Remoto',
+        location: 'São Paulo-SP',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      buzzveltech: {
+        company: 'Buzzvel',
+        role: 'Tech Manager',
+        period: 'Março 2025 — Outubro 2025',
+        workModel: 'Remoto',
+        location: 'Lisboa, Portugal',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      buzzveldev: {
+        company: 'Buzzvel',
+        role: 'Software Engineer',
+        period: 'Novembro 2022 — Fevereiro 2025',
+        workModel: 'Remoto',
+        location: 'Lisboa, Portugal',
+        bullets: [
+          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
+          'Led frontend architecture improvements using React and TypeScript',
+          'Introduced Docker-based environments to standardize deployments',
+        ],
+      },
+      produtecnica: {
+        company: 'Grupo Produtécnica',
+        role: 'Assistente de T.I.',
+        period: 'Fevereiro 2022 — Julho 2022',
+        workModel: 'Presencial',
+        location: 'Balsas-MA',
         bullets: [
           'APIs escaláveis com Node.js e PostgreSQL com milhares de requisições diárias',
           'Arquitetura frontend com React e TypeScript',
           'Ambientes Docker para padronizar deploys',
         ],
       },
-      north: {
-        company: 'Northwind Systems',
-        role: 'Desenvolvedor Full Stack',
-        period: '2019 — 2022',
+      contabilize: {
+        company: 'Contabilize Contabilidade',
+        role: 'Assistente de T.I.',
+        period: 'Janeiro 2021 — Janeiro 2022',
+        workModel: 'Presencial',
+        location: 'Balsas-MA',
         bullets: [
           'Serviços Laravel e MySQL para clientes B2B',
           'Módulos React Native usados por equipes de vendas mobile',
