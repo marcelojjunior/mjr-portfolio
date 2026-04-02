@@ -34,13 +34,19 @@ export function Navbar() {
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <a
           href={`#${SECTION_IDS.hero}`}
-          className="text-fg focus-visible:ring-ring-focus font-mono text-sm font-semibold tracking-tight focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none"
+          className={cn(
+            'focus-visible:ring-ring-focus font-mono text-sm font-semibold tracking-tight transition-colors focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none',
+            active === SECTION_IDS.hero
+              ? 'text-accent'
+              : 'text-fg hover:text-accent',
+          )}
+          aria-current={active === SECTION_IDS.hero ? true : undefined}
           onClick={(e) => {
             e.preventDefault()
             onNav(SECTION_IDS.hero)
           }}
         >
-          ~/portfolio
+          ~/marcelojunior
         </a>
 
         <nav
@@ -59,9 +65,9 @@ export function Navbar() {
                 'focus-visible:ring-ring-focus rounded-md px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none',
                 active === item.id
                   ? 'text-accent bg-accent-soft/50'
-                  : 'hover:text-fg',
+                  : 'text-fg-muted hover:text-fg',
               )}
-              aria-current={active === item.id ? 'true' : undefined}
+              aria-current={active === item.id ? true : undefined}
             >
               {t(item.labelKey)}
             </a>
@@ -134,8 +140,11 @@ export function Navbar() {
               }}
               className={cn(
                 'focus-visible:ring-ring-focus rounded-md px-3 py-3 text-sm focus-visible:ring-2 focus-visible:outline-none',
-                active === item.id ? 'text-accent bg-accent-soft/40' : '',
+                active === item.id
+                  ? 'text-accent bg-accent-soft/40'
+                  : 'text-fg-muted',
               )}
+              aria-current={active === item.id ? true : undefined}
             >
               {t(item.labelKey)}
             </a>
