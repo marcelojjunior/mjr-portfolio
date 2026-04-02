@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { BlinkingCaret } from '@/components/BlinkingCaret'
 import { TerminalBlock } from '@/components/TerminalBlock'
@@ -68,9 +67,16 @@ export function HeroSection() {
           ) : null}
         </motion.div>
 
-        <motion.div variants={staggerItem} className="mb-6">
+        {/* <motion.div variants={staggerItem} className="mb-6">
           <Badge>{t('hero.badge')}</Badge>
-        </motion.div>
+        </motion.div> */}
+
+        <motion.p
+          variants={staggerItem}
+          className="text-accent mt-4 font-mono text-sm md:text-base"
+        >
+          {t('hero.roleLine')}
+        </motion.p>
 
         <motion.h1
           id="hero-heading"
@@ -81,13 +87,6 @@ export function HeroSection() {
           <span className="text-accent">{t('hero.name')}</span>
           <BlinkingCaret className="md:ml-1" />
         </motion.h1>
-
-        <motion.p
-          variants={staggerItem}
-          className="text-accent mt-4 font-mono text-sm md:text-base"
-        >
-          {t('hero.roleLine')}
-        </motion.p>
 
         <motion.p
           variants={staggerItem}

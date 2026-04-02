@@ -52,7 +52,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
-  --spacing-section: 5rem;
+  --spacing-section: 4rem;
 }
 
 @layer base {
