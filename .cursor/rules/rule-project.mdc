@@ -1,0 +1,50 @@
+---
+alwaysApply: true
+---
+
+# PROJECT RULES
+
+## GENERAL
+- All code must be written in English
+- Use clean code principles
+- Prefer readability over cleverness
+- Avoid large components (>200 lines)
+
+## STACK
+- React (Vite)
+- Tailwind CSS
+- Framer Motion
+- Zustand
+
+## ARCHITECTURE
+- Use functional components only
+- Separate logic into hooks
+- Keep components presentational when possible
+- Use absolute imports
+
+## NAMING
+- Components: PascalCase
+- Hooks: useSomething
+- Variables/functions: camelCase
+- Constants: UPPER_CASE
+
+## STYLING
+- Use Tailwind only
+- Avoid inline styles
+- Extract repeated patterns into components
+
+## STATE
+- Use Zustand for global state
+- Avoid prop drilling
+
+## PERFORMANCE
+- Lazy load sections when possible
+- Avoid unnecessary re-renders
+
+## UX
+- Always include hover and focus states
+- Ensure accessibility (ARIA, keyboard nav)
+
+## OUTPUT EXPECTATION
+- Always explain briefly what was created
+- Keep code clean and production-ready

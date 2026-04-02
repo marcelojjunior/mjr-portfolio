@@ -1,0 +1,103 @@
+import { motion } from 'framer-motion'
+
+import { Card } from '@/components/ui/Card'
+import { SectionHeading } from '@/components/SectionHeading'
+import { SectionReveal } from '@/components/SectionReveal'
+import { PROJECTS } from '@/constants/content'
+import { SECTION_IDS } from '@/constants/sections'
+import { useTranslation } from '@/hooks/useTranslation'
+import { staggerContainer, staggerItem } from '@/utils/motion'
+
+export function ProjectsSection() {
+  const { t, tList } = useTranslation()
+  const ordered = [...PROJECTS].sort((a, b) =>
+    a.featured === b.featured ? 0 : a.featured ? -1 : 1,
+  )
+
+  return (
+    <SectionReveal id={SECTION_IDS.projects}>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          title={t('projects.title')}
+          subtitle={t('projects.subtitle')}
+        />
+
+        <motion.div
+          className="grid gap-6 md:grid-cols-2"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-10%' }}
+        >
+          {ordered.map((project) => {
+            const impacts = tList(project.impactPath)
+            return (
+              <motion.article
+                key={project.id}
+                variants={staggerItem}
+                className={project.featured ? 'md:col-span-2' : ''}
+              >
+                <Card
+                  className={`flex h-full flex-col p-6 ${
+                    project.featured
+                      ? 'border-accent/45 shadow-[0_0_40px_-16px_var(--accent)]'
+                      : ''
+                  }`}
+                >
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
+                    <h3 className="text-fg text-lg font-semibold">
+                      {t(project.nameKey)}
+                    </h3>
+                    {project.featured ? (
+                      <span className="border-accent/40 bg-accent-soft text-accent rounded-full border px-2 py-0.5 text-xs font-medium">
+                        {t('projects.featured')}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="text-fg-muted grow text-sm leading-relaxed">
+                    {t(project.descriptionKey)}
+                  </p>
+                  <p className="text-accent mt-4 font-mono text-xs">
+                    {project.tech.join(' · ')}
+                  </p>
+                  <div className="mt-4">
+                    <p className="text-fg mb-2 text-xs font-semibold uppercase tracking-wide">
+                      {t('projects.impactLabel')}
+                    </p>
+                    <ul className="text-fg-muted list-inside list-disc space-y-1 text-sm">
+                      {impacts.map((line, i) => (
+                        <li key={i}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <motion.a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-accent hover:text-fg focus-visible:ring-ring-focus text-sm font-medium underline-offset-4 hover:underline focus-visible:rounded focus-visible:ring-2 focus-visible:outline-none"
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      {t('projects.viewGithub')}
+                    </motion.a>
+                    {project.liveUrl ? (
+                      <motion.a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="text-fg-muted hover:text-accent focus-visible:ring-ring-focus text-sm focus-visible:ring-2 focus-visible:outline-none"
+                        whileHover={{ scale: 1.03 }}
+                      >
+                        {t('projects.viewLive')}
+                      </motion.a>
+                    ) : null}
+                  </div>
+                </Card>
+              </motion.article>
+            )
+          })}
+        </motion.div>
+      </div>
+    </SectionReveal>
+  )
+}
