@@ -30,7 +30,7 @@ export const ptBR = {
   },
   projects: {
     title: 'Projetos',
-    subtitle: 'Entrega, impacto e sistemas em produção.',
+    subtitle: 'Projetos que mostram como transformo problema em solução com resultado real.',
     featured: 'Destaque',
     impactLabel: 'Impacto',
     viewGithub: 'GitHub',
@@ -80,7 +80,7 @@ export const ptBR = {
   },
   experience: {
     title: 'Experiência',
-    subtitle: 'Funções com foco em escala, performance e entrega.',
+    subtitle: 'Minha trajetória construindo produtos, liderando entregas e resolvendo desafios técnicos.',
     items: {
       soulloop: {
         company: 'Soulloop',
@@ -160,7 +160,7 @@ export const ptBR = {
   },
   stack: {
     title: 'Stack',
-    subtitle: 'Ferramentas que uso para entregar ponta a ponta.',
+    subtitle: 'Tecnologias que uso para tirar ideias do papel e colocar produto no ar.',
     groups: {
       mobile: 'Mobile',
       backend: 'Backend',
@@ -170,7 +170,7 @@ export const ptBR = {
   },
   contact: {
     title: 'Contato',
-    subtitle: 'Canais diretos — sem formulário.',
+    subtitle: 'Se quiser conversar sobre projeto, produto ou oportunidade, eu estou por aqui.',
     emailAria: 'Enviar e-mail para Marcelo Junior',
     externalAria: 'Abre em uma nova aba',
     cards: {

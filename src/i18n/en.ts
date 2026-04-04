@@ -28,7 +28,7 @@ export const en = {
   },
   projects: {
     title: 'Projects',
-    subtitle: 'Delivery, impact, and production systems.',
+    subtitle: 'Projects that show how I turn problems into solutions with real outcomes.',
     featured: 'Featured',
     impactLabel: 'Impact',
     viewGithub: 'GitHub',
@@ -78,7 +78,7 @@ export const en = {
   },
   experience: {
     title: 'Experience',
-    subtitle: 'Roles focused on scale, performance, and delivery.',
+    subtitle: 'My journey building products, leading delivery, and solving technical challenges.',
     items: {
       soulloop: {
         company: 'Soulloop',
@@ -158,7 +158,7 @@ export const en = {
   },
   stack: {
     title: 'Stack',
-    subtitle: 'Tools I use to ship end-to-end.',
+    subtitle: 'Technologies I use to take ideas from concept to production.',
     groups: {
       mobile: 'Mobile',
       backend: 'Backend',
@@ -168,7 +168,7 @@ export const en = {
   },
   contact: {
     title: 'Contact',
-    subtitle: 'Direct channels — no form.',
+    subtitle: "If you'd like to talk about a project, product, or opportunity, I'm here.",
     emailAria: 'Send email to Marcelo Junior',
     externalAria: 'Opens in a new tab',
     cards: {

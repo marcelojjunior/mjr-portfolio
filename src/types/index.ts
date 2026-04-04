@@ -3,6 +3,7 @@ export type ProjectItem = {
   nameKey: string
   descriptionKey: string
   tech: string[]
+  imageUrl?: string
   /** i18n path to string[] e.g. projects.items.commerce.impact */
   impactPath: string
   featured?: boolean

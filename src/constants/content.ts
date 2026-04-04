@@ -6,6 +6,7 @@ export const PROJECTS: ProjectItem[] = [
     nameKey: 'projects.items.vmfight.name',
     descriptionKey: 'projects.items.vmfight.description',
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    imageUrl: '/projects/vmfight.png',
     impactPath: 'projects.items.vmfight.impact',
   },
   {
@@ -13,6 +14,7 @@ export const PROJECTS: ProjectItem[] = [
     nameKey: 'projects.items.talents.name',
     descriptionKey: 'projects.items.talents.description',
     tech: ['React', 'TypeScript', 'Firebase', 'Recharts'],
+    imageUrl: '/projects/talents.png',
     impactPath: 'projects.items.talents.impact',
   },
   {
@@ -20,6 +22,7 @@ export const PROJECTS: ProjectItem[] = [
     nameKey: 'projects.items.mbgestor.name',
     descriptionKey: 'projects.items.mbgestor.description',
     tech: ['React', 'TypeScript', 'Firebase', 'Recharts'],
+    imageUrl: '/projects/mbgestor.png',
     impactPath: 'projects.items.mbgestor.impact',
   },
   {
@@ -27,6 +30,7 @@ export const PROJECTS: ProjectItem[] = [
     nameKey: 'projects.items.weather.name',
     descriptionKey: 'projects.items.weather.description',
     tech: ['React Native', 'TypeScript', 'Axios', 'NativeWind'],
+    imageUrl: '/projects/weather.png',
     impactPath: 'projects.items.weather.impact',
   },
 ]
