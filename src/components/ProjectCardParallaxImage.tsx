@@ -14,14 +14,22 @@ const TOP_OFFSET_PERCENT = (IMAGE_HEIGHT_PERCENT - 100) / 2
 /** How far the inner layer shifts (px) between “card entering” and “card leaving” viewport. */
 const PARALLAX_Y_RANGE_PX = 44
 
+/** Intrinsic size of `/public/projects/*.png` covers (layout hint for CLS / audits). */
+const DEFAULT_INTRINSIC_WIDTH = 1280
+const DEFAULT_INTRINSIC_HEIGHT = 720
+
 type ProjectCardParallaxImageProps = {
   src: string
   alt: string
+  width?: number
+  height?: number
 }
 
 export function ProjectCardParallaxImage({
   src,
   alt,
+  width = DEFAULT_INTRINSIC_WIDTH,
+  height = DEFAULT_INTRINSIC_HEIGHT,
 }: ProjectCardParallaxImageProps) {
   const reduced = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -48,6 +56,8 @@ export function ProjectCardParallaxImage({
         <img
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           className="h-full w-full object-cover"
           loading="lazy"
           decoding="async"
@@ -75,6 +85,8 @@ export function ProjectCardParallaxImage({
         <img
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           className="pointer-events-none h-full w-full object-cover object-center select-none"
           loading="lazy"
           decoding="async"
