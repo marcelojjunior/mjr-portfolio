@@ -10,7 +10,8 @@ import { useScrollToSection } from '@/hooks/useScrollToSection'
 import { useTranslation } from '@/hooks/useTranslation'
 import { staggerContainer, staggerItem } from '@/utils/motion'
 
-const INTRO_DELAY_MS = 0
+/** Wait after the `$` line is shown before the `>` output starts typing. */
+const DELAY_BEFORE_OUTPUT_TYPING_MS = 500
 const TYPE_OUTPUT_MS = 62
 /** After the `>` output is fully typed: brief pause, then unlock the page. */
 const PAUSE_AFTER_OUTPUT_MS = 260
@@ -24,7 +25,6 @@ export function HeroSection() {
   const cmdText = ` ${t('hero.terminalLine')}`
   const outText = t('hero.terminalOutput')
 
-  const [firstLineReady, setFirstLineReady] = useState(false)
   const [outTyped, setOutTyped] = useState('')
   const timeoutIds = useRef<number[]>([])
 
@@ -48,7 +48,6 @@ export function HeroSection() {
 
     schedule(() => {
       if (cancelled) return
-      setFirstLineReady(true)
       let i = 0
       const tickOut = () => {
         if (cancelled) return
@@ -67,7 +66,7 @@ export function HeroSection() {
         }
       }
       tickOut()
-    }, INTRO_DELAY_MS)
+    }, DELAY_BEFORE_OUTPUT_TYPING_MS)
 
     return () => {
       cancelled = true
@@ -75,31 +74,22 @@ export function HeroSection() {
     }
   }, [outText, introComplete, completeIntro])
 
-  const firstLineVisible = introComplete || firstLineReady
   const outVisible = introComplete ? outText : outTyped
   const typingOutput =
-    !introComplete && firstLineReady && outTyped.length < outText.length
+    !introComplete && outTyped.length < outText.length
 
-  const lines = firstLineVisible
-    ? [
-        {
-          prefix: '$',
-          content: cmdText,
-          muted: false,
-        },
-        {
-          prefix: '>',
-          content: outVisible,
-          muted: !outVisible,
-        },
-      ]
-    : [
-        {
-          prefix: '$',
-          content: '',
-          muted: true,
-        },
-      ]
+  const lines = [
+    {
+      prefix: '$',
+      content: cmdText,
+      muted: false,
+    },
+    {
+      prefix: '>',
+      content: outVisible,
+      muted: !outVisible,
+    },
+  ]
 
   return (
     <section
@@ -111,7 +101,7 @@ export function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-8 max-w-xl">
           <TerminalBlock className="w-full" lines={lines} />
-          {typingOutput ? (
+          {typingOutput && outVisible ? (
             <span className="sr-only" aria-live="polite">
               {outVisible}
             </span>
