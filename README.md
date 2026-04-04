@@ -1,38 +1,117 @@
 # mjr-portfolio
 
-Personal developer portfolio — React (Vite), Tailwind CSS v4, Framer Motion, Zustand, Lenis, and Vercel Web Analytics.
+Personal portfolio built to showcase projects, professional experience, technical stack, and contact links in a polished bilingual interface.
 
-This project uses **[pnpm](https://pnpm.io)** (`packageManager` is set in [`package.json`](package.json) for Corepack).
+The project was designed with a focus on performance, smooth interactions, and straightforward content management, using animated transitions, lazy-loaded sections, and a clean component structure.
 
-## Customize
+## Overview
 
-- **Name and copy:** [`src/i18n/en.ts`](src/i18n/en.ts) and [`src/i18n/pt-BR.ts`](src/i18n/pt-BR.ts) (hero name, projects, experience, contact labels).
-- **Structured data (URLs, tech lists):** [`src/constants/content.ts`](src/constants/content.ts).
-- **SEO / Open Graph:** [`index.html`](index.html) — set `og:url`, `title`, and meta descriptions to your production domain.
-- **CV:** add your file as [`public/cv.pdf`](public/cv.pdf) (remove [`public/cv-placeholder.txt`](public/cv-placeholder.txt) when done). The hero button links to `/cv.pdf`.
+This portfolio includes:
 
-## Scripts
+- hero section with personal intro and call-to-action buttons
+- projects section with cards, tech stack, and external links
+- professional experience section
+- stack section organized by category
+- direct contact section
+- support for `pt-BR` and `en`
+- smooth scrolling and animated section reveals
+
+## Tech Stack
+
+### Core
+
+- `React 19`
+- `TypeScript`
+- `Vite`
+
+### UI and experience
+
+- `Tailwind CSS v4`
+- `Framer Motion`
+- `Lenis`
+- `React Icons`
+- `@fontsource/jetbrains-mono`
+
+### State and utilities
+
+- `Zustand`
+- `clsx`
+
+### Analytics
+
+- `@vercel/analytics`
+
+## Project Structure
+
+```text
+src/
+  components/    Reusable UI components
+  constants/     Structured content and app constants
+  hooks/         Behavior, animation, translation, and navigation hooks
+  i18n/          Portuguese and English copy
+  layouts/       Main page layout
+  providers/     Global providers
+  sections/      Main portfolio sections
+  store/         Global state with Zustand
+  utils/         Helper functions
+public/
+  Public assets and static files
+```
+
+## Getting Started
+
+### Requirements
+
+- `Node.js` 18 or higher
+- `pnpm`
+
+If you use Corepack:
+
+```bash
+corepack enable
+```
+
+### Install dependencies
 
 ```bash
 pnpm install
+```
+
+### Start development server
+
+```bash
 pnpm dev
+```
+
+The app will run at `http://localhost:5173`.
+
+### Build for production
+
+```bash
 pnpm build
+```
+
+### Preview production build
+
+```bash
 pnpm preview
+```
+
+### Run lint
+
+```bash
 pnpm lint
 ```
 
-## Deploy (Vercel)
+## Available Scripts
 
-1. Push this repo to GitHub (see remote below).
-2. Import the repository in [Vercel](https://vercel.com) — framework **Vite**, output **`dist`**. With [`pnpm-lock.yaml`](pnpm-lock.yaml) present, Vercel runs **`pnpm install`** and **`pnpm build`** automatically (no need to set the install command unless you customize it).
-3. Enable **Web Analytics** in the Vercel project settings.
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Starts the development server |
+| `pnpm build` | Generates the production build |
+| `pnpm preview` | Serves the production build locally |
+| `pnpm lint` | Runs lint checks |
 
-## GitHub remote (example)
+## License
 
-```bash
-git remote add origin git@github.com:marcelojjunior/mjr-portfolio.git
-git branch -M main
-git push -u origin main
-```
-
-Adjust the remote URL if your username or repo name differs.
+This project is maintained as a personal professional portfolio.
