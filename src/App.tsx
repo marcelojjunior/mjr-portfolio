@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react'
 import { motion } from 'framer-motion'
 import { lazy, Suspense } from 'react'
 import { ReactLenis } from 'lenis/react'
@@ -23,6 +22,13 @@ const StackSection = lazy(async () => ({
 const ContactSection = lazy(async () => ({
   default: (await import('@/sections/ContactSection')).ContactSection,
 }))
+
+const Analytics = lazy(async () => {
+  const { Analytics: AnalyticsComponent } = await import(
+    '@vercel/analytics/react'
+  )
+  return { default: AnalyticsComponent }
+})
 
 function SectionFallback() {
   return (
@@ -77,7 +83,9 @@ export default function App() {
           </ReactLenis>
         )}
       </IntroGateProvider>
-      <Analytics />
+      <Suspense fallback={null}>
+        <Analytics />
+      </Suspense>
     </AppProviders>
   )
 }
