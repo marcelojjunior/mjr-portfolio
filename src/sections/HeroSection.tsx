@@ -1,115 +1,167 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { BlinkingCaret } from '@/components/BlinkingCaret'
 import { TerminalBlock } from '@/components/TerminalBlock'
 import { SECTION_IDS } from '@/constants/sections'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useIntroGate } from '@/hooks/useIntroGate'
 import { useScrollToSection } from '@/hooks/useScrollToSection'
 import { useTranslation } from '@/hooks/useTranslation'
 import { staggerContainer, staggerItem } from '@/utils/motion'
 
+const INTRO_DELAY_MS = 0
+const TYPE_OUTPUT_MS = 62
+/** After the `>` output is fully typed: brief pause, then unlock the page. */
+const PAUSE_AFTER_OUTPUT_MS = 260
+const PAUSE_BEFORE_REVEAL_MS = 220
+
 export function HeroSection() {
   const { t } = useTranslation()
   const scrollTo = useScrollToSection()
-  const reduced = useReducedMotion()
-  const fullOutput = t('hero.terminalOutput')
-  const [typed, setTyped] = useState('')
+  const { introComplete, completeIntro } = useIntroGate()
+
+  const cmdText = ` ${t('hero.terminalLine')}`
+  const outText = t('hero.terminalOutput')
+
+  const [firstLineReady, setFirstLineReady] = useState(false)
+  const [outTyped, setOutTyped] = useState('')
+  const timeoutIds = useRef<number[]>([])
+
+  const clearTimers = () => {
+    timeoutIds.current.forEach((id) => window.clearTimeout(id))
+    timeoutIds.current = []
+  }
+
+  const schedule = (fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms)
+    timeoutIds.current.push(id)
+    return id
+  }
 
   useEffect(() => {
-    if (reduced) return
-    let i = 0
-    let timeoutId = 0
-    let cancelled = false
-    const tick = () => {
-      if (cancelled) return
-      i += 1
-      setTyped(fullOutput.slice(0, i))
-      if (i < fullOutput.length) {
-        timeoutId = window.setTimeout(tick, 28)
-      }
+    if (introComplete) {
+      return
     }
-    const startId = window.setTimeout(tick, 400)
+
+    let cancelled = false
+
+    schedule(() => {
+      if (cancelled) return
+      setFirstLineReady(true)
+      let i = 0
+      const tickOut = () => {
+        if (cancelled) return
+        i += 1
+        setOutTyped(outText.slice(0, i))
+        if (i < outText.length) {
+          schedule(tickOut, TYPE_OUTPUT_MS)
+        } else {
+          schedule(() => {
+            if (cancelled) return
+            schedule(() => {
+              if (cancelled) return
+              completeIntro()
+            }, PAUSE_BEFORE_REVEAL_MS)
+          }, PAUSE_AFTER_OUTPUT_MS)
+        }
+      }
+      tickOut()
+    }, INTRO_DELAY_MS)
+
     return () => {
       cancelled = true
-      window.clearTimeout(startId)
-      window.clearTimeout(timeoutId)
+      clearTimers()
     }
-  }, [fullOutput, reduced])
+  }, [outText, introComplete, completeIntro])
 
-  const lineOutput = reduced ? fullOutput : typed
+  const firstLineVisible = introComplete || firstLineReady
+  const outVisible = introComplete ? outText : outTyped
+  const typingOutput =
+    !introComplete && firstLineReady && outTyped.length < outText.length
+
+  const lines = firstLineVisible
+    ? [
+        {
+          prefix: '$',
+          content: cmdText,
+          muted: false,
+        },
+        {
+          prefix: '>',
+          content: outVisible,
+          muted: !outVisible,
+        },
+      ]
+    : [
+        {
+          prefix: '$',
+          content: '',
+          muted: true,
+        },
+      ]
 
   return (
     <section
       id={SECTION_IDS.hero}
       className="scroll-mt-24 pt-10 pb-section md:pt-16"
-      aria-labelledby="hero-heading"
+      aria-labelledby={introComplete ? 'hero-heading' : undefined}
+      aria-busy={typingOutput}
     >
-      <motion.div
-        className="mx-auto max-w-7xl px-4 sm:px-6"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div variants={staggerItem}>
-          <TerminalBlock
-            className="mb-8 max-w-xl"
-            lines={[
-              { prefix: '$', content: ` ${t('hero.terminalLine')}` },
-              { prefix: '>', content: lineOutput, muted: !lineOutput },
-            ]}
-          />
-          {!reduced && typed.length < fullOutput.length ? (
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-8 max-w-xl">
+          <TerminalBlock className="w-full" lines={lines} />
+          {typingOutput ? (
             <span className="sr-only" aria-live="polite">
-              {typed}
+              {outVisible}
             </span>
           ) : null}
-        </motion.div>
+        </div>
 
-        {/* <motion.div variants={staggerItem} className="mb-6">
-          <Badge>{t('hero.badge')}</Badge>
-        </motion.div> */}
-
-        <motion.p
-          variants={staggerItem}
-          className="text-accent mt-4 font-mono text-sm md:text-base"
-        >
-          {t('hero.roleLine')}
-        </motion.p>
-
-        <motion.h1
-          id="hero-heading"
-          variants={staggerItem}
-          className="text-fg max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl"
-        >
-          {t('hero.headline')}{' '}
-          <span className="text-accent">{t('hero.name')}</span>
-          <BlinkingCaret className="md:ml-1" />
-        </motion.h1>
-
-        <motion.p
-          variants={staggerItem}
-          className="text-fg-muted mt-6 max-w-2xl text-sm leading-relaxed md:text-base"
-        >
-          {t('hero.description')}
-        </motion.p>
-
-        <motion.div
-          variants={staggerItem}
-          className="mt-10 flex flex-wrap gap-3"
-        >
-          <Button
-            type="button"
-            onClick={() => scrollTo(SECTION_IDS.projects)}
+        {introComplete ? (
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            {t('hero.ctaProjects')}
-          </Button>
-          {/* <Button variant="outline" href="/cv.pdf" download>
-            {t('hero.ctaCv')}
-          </Button> */}
-        </motion.div>
-      </motion.div>
+            <motion.p
+              variants={staggerItem}
+              className="text-accent mt-4 font-mono text-sm md:text-base"
+            >
+              {t('hero.roleLine')}
+            </motion.p>
+
+            <motion.h1
+              id="hero-heading"
+              variants={staggerItem}
+              className="text-fg max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl"
+            >
+              {t('hero.headline')}{' '}
+              <span className="text-accent">{t('hero.name')}</span>
+              <BlinkingCaret className="md:ml-1" />
+            </motion.h1>
+
+            <motion.p
+              variants={staggerItem}
+              className="text-fg-muted mt-6 max-w-2xl text-sm leading-relaxed md:text-base"
+            >
+              {t('hero.description')}
+            </motion.p>
+
+            <motion.div
+              variants={staggerItem}
+              className="mt-10 flex flex-wrap gap-3"
+            >
+              <Button
+                type="button"
+                onClick={() => scrollTo(SECTION_IDS.projects)}
+              >
+                {t('hero.ctaProjects')}
+              </Button>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </div>
     </section>
   )
 }

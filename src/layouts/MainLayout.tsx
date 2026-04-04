@@ -1,6 +1,7 @@
 import { AppBackground } from '@/components/AppBackground'
 import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
+import { useIntroGate } from '@/hooks/useIntroGate'
 import { useTranslation } from '@/hooks/useTranslation'
 
 type MainLayoutProps = {
@@ -9,6 +10,7 @@ type MainLayoutProps = {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const { t } = useTranslation()
+  const { introComplete } = useIntroGate()
 
   return (
     <>
@@ -17,10 +19,14 @@ export function MainLayout({ children }: MainLayoutProps) {
         {t('a11y.skipToContent')}
       </a>
       <Navbar />
-      <main id="main-content" className="relative z-0">
+      <main
+        id="main-content"
+        className="relative z-0"
+        aria-busy={!introComplete}
+      >
         {children}
       </main>
-      <Footer />
+      {introComplete ? <Footer /> : null}
     </>
   )
 }

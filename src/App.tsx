@@ -1,7 +1,10 @@
 import { Analytics } from '@vercel/analytics/react'
+import { motion } from 'framer-motion'
 import { lazy, Suspense } from 'react'
 import { ReactLenis } from 'lenis/react'
 
+import { IntroGateProvider } from '@/contexts/IntroGateProvider'
+import { useIntroGate } from '@/hooks/useIntroGate'
 import { MainLayout } from '@/layouts/MainLayout'
 import { AppProviders } from '@/providers/AppProviders'
 import { HeroSection } from '@/sections/HeroSection'
@@ -31,15 +34,25 @@ function SectionFallback() {
 
 function AppShell() {
   const locale = useAppStore((s) => s.locale)
+  const { introComplete } = useIntroGate()
+
   return (
     <MainLayout>
       <HeroSection key={locale} />
-      <Suspense fallback={<SectionFallback />}>
-        <ProjectsSection />
-        <ExperienceSection />
-        <StackSection />
-        <ContactSection />
-      </Suspense>
+      {introComplete ? (
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Suspense fallback={<SectionFallback />}>
+            <ProjectsSection />
+            <ExperienceSection />
+            <StackSection />
+            <ContactSection />
+          </Suspense>
+        </motion.div>
+      ) : null}
     </MainLayout>
   )
 }
@@ -49,19 +62,21 @@ export default function App() {
 
   return (
     <AppProviders>
-      {reducedMotion ? (
-        <AppShell />
-      ) : (
-        <ReactLenis
-          root
-          options={{
-            autoRaf: true,
-            anchors: { offset: -72 },
-          }}
-        >
+      <IntroGateProvider reducedMotion={reducedMotion}>
+        {reducedMotion ? (
           <AppShell />
-        </ReactLenis>
-      )}
+        ) : (
+          <ReactLenis
+            root
+            options={{
+              autoRaf: true,
+              anchors: { offset: -72 },
+            }}
+          >
+            <AppShell />
+          </ReactLenis>
+        )}
+      </IntroGateProvider>
       <Analytics />
     </AppProviders>
   )

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { NAV_ITEMS } from '@/constants/nav'
 import { SECTION_IDS, type SectionId } from '@/constants/sections'
+import { useIntroGate } from '@/hooks/useIntroGate'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { useScrollToSection } from '@/hooks/useScrollToSection'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -12,6 +13,7 @@ const NAV_HEIGHT = 'h-[4.25rem]'
 
 export function Navbar() {
   const { t } = useTranslation()
+  const { introComplete } = useIntroGate()
   const active = useActiveSection()
   const scrollTo = useScrollToSection()
   const [open, setOpen] = useState(false)
@@ -23,6 +25,9 @@ export function Navbar() {
     scrollTo(id)
     setOpen(false)
   }
+
+  const isNavLocked = (id: SectionId) =>
+    !introComplete && id !== SECTION_IDS.hero
 
   return (
     <header
@@ -53,25 +58,31 @@ export function Navbar() {
           className="text-fg-muted hidden items-center gap-1 md:flex"
           aria-label={t('a11y.mainNav')}
         >
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                onNav(item.id)
-              }}
-              className={cn(
-                'focus-visible:ring-ring-focus rounded-md px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none',
-                active === item.id
-                  ? 'text-accent bg-accent-soft/50'
-                  : 'text-fg-muted hover:text-fg',
-              )}
-              aria-current={active === item.id ? true : undefined}
-            >
-              {t(item.labelKey)}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const locked = isNavLocked(item.id)
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                aria-disabled={locked}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (locked) return
+                  onNav(item.id)
+                }}
+                className={cn(
+                  'focus-visible:ring-ring-focus rounded-md px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none',
+                  locked && 'pointer-events-none opacity-35',
+                  active === item.id
+                    ? 'text-accent bg-accent-soft/50'
+                    : 'text-fg-muted hover:text-fg',
+                )}
+                aria-current={active === item.id ? true : undefined}
+              >
+                {t(item.labelKey)}
+              </a>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -130,25 +141,31 @@ export function Navbar() {
           className="mx-auto flex max-w-7xl flex-col px-4 py-3"
           aria-label={t('a11y.mainNav')}
         >
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                onNav(item.id)
-              }}
-              className={cn(
-                'focus-visible:ring-ring-focus rounded-md px-3 py-3 text-sm focus-visible:ring-2 focus-visible:outline-none',
-                active === item.id
-                  ? 'text-accent bg-accent-soft/40'
-                  : 'text-fg-muted',
-              )}
-              aria-current={active === item.id ? true : undefined}
-            >
-              {t(item.labelKey)}
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const locked = isNavLocked(item.id)
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                aria-disabled={locked}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (locked) return
+                  onNav(item.id)
+                }}
+                className={cn(
+                  'focus-visible:ring-ring-focus rounded-md px-3 py-3 text-sm focus-visible:ring-2 focus-visible:outline-none',
+                  locked && 'pointer-events-none opacity-35',
+                  active === item.id
+                    ? 'text-accent bg-accent-soft/40'
+                    : 'text-fg-muted',
+                )}
+                aria-current={active === item.id ? true : undefined}
+              >
+                {t(item.labelKey)}
+              </a>
+            )
+          })}
         </nav>
       </div>
     </header>
