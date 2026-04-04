@@ -79,10 +79,13 @@ export const ptBR = {
         workModel: 'Remoto',
         location: 'São Paulo-SP',
         bullets: [
-          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
-          'Led frontend architecture improvements using React and TypeScript',
-          'Introduced Docker-based environments to standardize deployments',
-        ],
+          'Atuo na manutenção e evolução de um aplicativo mobile em React Native, implementando funcionalidades e resolvendo bugs críticos',
+          'Desenvolvo interfaces responsivas e de alta performance, com foco em experiência do usuário',
+          'Integro o aplicativo com APIs e serviços externos, garantindo comunicação eficiente entre sistemas',
+          'Colaboro com designers e backend para garantir consistência e qualidade na experiência do produto',
+          'Atuo na sustentação do aplicativo, garantindo estabilidade, correções contínuas e melhorias de performance',
+          'Participo da definição de escopo e planejamento de funcionalidades',
+        ]
       },
       buzzveltech: {
         company: 'Buzzvel',
@@ -91,10 +94,13 @@ export const ptBR = {
         workModel: 'Remoto',
         location: 'Lisboa, Portugal',
         bullets: [
-          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
-          'Led frontend architecture improvements using React and TypeScript',
-          'Introduced Docker-based environments to standardize deployments',
-        ],
+          'Gerenciei o time de desenvolvimento em múltiplos projetos simultâneos, garantindo alinhamento e eficiência nas entregas',
+          'Planejei tarefas e sprints utilizando metodologias ágeis, assegurando organização e previsibilidade',
+          'Atuei na gestão de pessoas, acompanhando desempenho individual e apoiando o desenvolvimento do time',
+          'Realizei code reviews e ofereci suporte técnico para garantir a qualidade das entregas',
+          'Organizei e acompanhei entregas de projetos, garantindo cumprimento de prazos e objetivos',
+          'Participei de decisões estratégicas alinhadas aos objetivos de negócio',
+        ]
       },
       buzzveldev: {
         company: 'Buzzvel',
@@ -103,10 +109,12 @@ export const ptBR = {
         workModel: 'Remoto',
         location: 'Lisboa, Portugal',
         bullets: [
-          'Developed scalable APIs with Node.js and PostgreSQL handling thousands of daily requests',
-          'Led frontend architecture improvements using React and TypeScript',
-          'Introduced Docker-based environments to standardize deployments',
-        ],
+          'Atuei como desenvolvedor front-end na criação e manutenção de aplicações web e mobile utilizando React, Next.js, React Native e TypeScript',
+          'Desenvolvi interfaces responsivas e acessíveis, com foco em performance e experiência do usuário',
+          'Participei do desenvolvimento de landing pages, sistemas internos e sites institucionais, seguindo boas práticas de desenvolvimento',
+          'Criei soluções personalizadas em WordPress, incluindo blocos e temas sob medida para diferentes projetos',
+          'Realizei code reviews e colaborei com o time para garantir a qualidade e consistência das entregas',
+        ]
       },
       produtecnica: {
         company: 'Grupo Produtécnica',
@@ -115,10 +123,14 @@ export const ptBR = {
         workModel: 'Presencial',
         location: 'Balsas-MA',
         bullets: [
-          'APIs escaláveis com Node.js e PostgreSQL com milhares de requisições diárias',
-          'Arquitetura frontend com React e TypeScript',
-          'Ambientes Docker para padronizar deploys',
-        ],
+          'Prestei suporte técnico presencial e remoto para matriz e filiais, garantindo a continuidade dos serviços',
+          'Atuei na manutenção de sistemas e no atendimento de incidentes e requisições de usuários',
+          'Analisei falhas e identifiquei oportunidades de melhoria em processos internos',
+          'Levantei requisitos e elaborei especificações funcionais para sistemas',
+          'Realizei consultas e análises em banco de dados Oracle para suporte a diagnósticos e melhorias',
+          'Instalei, configurei e mantive ferramentas e sistemas corporativos',
+          'Monitorei e mantive sistemas de segurança (antivírus e firewall), contribuindo para um ambiente mais seguro',
+        ]
       },
       contabilize: {
         company: 'Contabilize Contabilidade',
@@ -127,10 +139,12 @@ export const ptBR = {
         workModel: 'Presencial',
         location: 'Balsas-MA',
         bullets: [
-          'Serviços Laravel e MySQL para clientes B2B',
-          'Módulos React Native usados por equipes de vendas mobile',
-          'Menor tempo de resposta a incidentes com logs e alertas estruturados',
-        ],
+          'Atuei no suporte técnico resolvendo incidentes de hardware e software, garantindo a continuidade dos serviços',
+          'Gerenciei usuários e permissões no Active Directory, contribuindo para maior controle e segurança de acesso',
+          'Executei consultas em PostgreSQL para suporte a operações internas e validação de informações',
+          'Configurei e mantive sistemas e ferramentas corporativas, assegurando desempenho e confiabilidade',
+          'Acompanhei e mantive sistemas de segurança (antivírus e firewall), reduzindo riscos e vulnerabilidades',
+        ]
       },
     },
   },
