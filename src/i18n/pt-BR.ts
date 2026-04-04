@@ -18,7 +18,7 @@ export const ptBR = {
   },
   hero: {
     terminalLine: 'marcelojunior@dev:~/portfolio$',
-    terminalOutput: 'run portfolio',
+    terminalOutput: 'abrir portfolio',
     badge: 'Full Stack Developer',
     headline: 'olá, eu sou',
     name: 'Marcelo Junior',

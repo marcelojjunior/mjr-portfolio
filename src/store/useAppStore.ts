@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import type { Locale } from '@/i18n'
+import { getDeviceLocale, getDeviceTheme } from '@/utils/devicePreferences'
 
 export type Theme = 'light' | 'dark'
 
@@ -17,8 +18,8 @@ type AppState = {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      theme: 'dark',
-      locale: 'en',
+      theme: getDeviceTheme(),
+      locale: getDeviceLocale(),
       setTheme: (theme) => set({ theme }),
       setLocale: (locale) => set({ locale }),
       toggleTheme: () =>
