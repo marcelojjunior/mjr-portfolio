@@ -6,7 +6,7 @@ export type ProjectItem = {
   /** i18n path to string[] e.g. projects.items.commerce.impact */
   impactPath: string
   featured?: boolean
-  githubUrl: string
+  githubUrl?: string
   liveUrl?: string
 }
 

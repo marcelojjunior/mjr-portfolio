@@ -36,34 +36,44 @@ export const ptBR = {
     viewGithub: 'GitHub',
     viewLive: 'Demo ao vivo',
     items: {
-      commerce: {
-        name: 'API de plataforma de e-commerce',
+      weather: {
+        name: 'WeatherApp',
         description:
-          'Problema: checkout lento e integrações frágeis. Solução: camada de API redesenhada com cache, pagamentos idempotentes e observabilidade.',
+          'Aplicativo mobile de previsão do tempo com busca inteligente de cidades, consulta em tempo real e forecast estendido para os próximos 6 dias.',
         impact: [
-          'Tempo de resposta da API reduzido em ~40%',
-          'Mais de 10k requisições/dia no pico',
-          'Conclusão de checkout melhorada com erros mais claros',
+          'Busca com sugestões automáticas para cidades do mundo todo',
+          'Histórico local de pesquisas com suporte offline e verificação de conectividade',
+          'Experiência mobile com clima atual, última atualização e previsão de 6 dias em um único fluxo',
         ],
       },
-      mobile: {
-        name: 'App mobile de operações de campo',
+      talents: {
+        name: 'Feira de Talentos — Pontuação',
         description:
-          'Problema: fluxos offline-first ausentes em ferramentas legadas. Solução: app React Native com fila de sync e resolução de conflitos.',
+          'Sistema web para controle de pontuação da Feira de Talentos, com gestão de classes, critérios, professores, alunos e acompanhamento da evolução ao longo do ano.',
         impact: [
-          'Menos tempo de entrada de dados para equipes de campo',
-          'Modo offline confiável com sync em background',
-          'Publicado para iOS e Android a partir de um único codebase',
+          'Fluxos separados para administrador, professor e avaliador com dashboards dedicados',
+          'Cálculo de pontuação por critério, totais anuais e visualizações em gráficos por aluno e turma',
+          'Operação centralizada com Firebase Auth, Firestore e interface administrativa responsiva',
         ],
       },
-      internal: {
-        name: 'Painel administrativo interno',
+      vmfight: {
+        name: 'VM Fight',
         description:
-          'Problema: ferramentas fragmentadas para operações. Solução: dashboard React unificado com acesso por perfil e métricas em tempo real.',
+          'Landing page institucional para academia de artes marciais com foco em conversão para aula experimental, apresentação das modalidades, horários, professores e localização.',
         impact: [
-          'Fluxos consolidados em uma interface',
-          'Decisões mais rápidas com dados operacionais ao vivo',
-          'Frontend type-safe com TypeScript',
+          'Hero com vídeo e copy orientados à conversão para WhatsApp',
+          'Seções completas com modalidades, grade de horários, equipe e mapa integrado',
+          'Experiência visual rica com animações de entrada e carregamento progressivo de mídia',
+        ],
+      },
+      mbgestor: {
+        name: 'MB Gestor',
+        description:
+          'Sistema de gestão operacional e financeira para obras, com controle de ganhos, gastos, reservas, clientes, funcionários, tarefas e acompanhamento centralizado em dashboard.',
+        impact: [
+          'Dashboard com métricas financeiras, gráficos e últimas movimentações do negócio',
+          'Gestão de obras vinculadas a clientes, com calendário operacional e acompanhamento de status',
+          'Fluxos administrativos para equipe, diárias, categorias, tarefas e histórico em uma única aplicação',
         ],
       },
     },

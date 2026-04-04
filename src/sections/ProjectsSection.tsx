@@ -10,9 +10,6 @@ import { staggerContainer, staggerItem } from '@/utils/motion'
 
 export function ProjectsSection() {
   const { t, tList } = useTranslation()
-  const ordered = [...PROJECTS].sort((a, b) =>
-    a.featured === b.featured ? 0 : a.featured ? -1 : 1,
-  )
 
   return (
     <SectionReveal id={SECTION_IDS.projects}>
@@ -29,28 +26,17 @@ export function ProjectsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: '-10%' }}
         >
-          {ordered.map((project) => {
+          {PROJECTS.map((project) => {
             const impacts = tList(project.impactPath)
             return (
-              <motion.article
-                key={project.id}
-                variants={staggerItem}
-                className={project.featured ? 'md:col-span-2' : ''}
-              >
+              <motion.article key={project.id} variants={staggerItem}>
                 <Card
-                  className={`flex h-full flex-col p-6 ${
-                    project.featured ? 'border-accent/45' : ''
-                  }`}
+                  className="flex h-full flex-col p-6"
                 >
                   <div className="mb-3 flex flex-wrap items-center gap-2">
                     <h3 className="text-fg text-lg font-semibold">
                       {t(project.nameKey)}
                     </h3>
-                    {project.featured ? (
-                      <span className="border-accent/40 bg-accent-soft text-accent rounded-full border px-2 py-0.5 text-xs font-medium">
-                        {t('projects.featured')}
-                      </span>
-                    ) : null}
                   </div>
                   <p className="text-fg-muted grow text-sm leading-relaxed">
                     {t(project.descriptionKey)}
@@ -69,15 +55,17 @@ export function ProjectsSection() {
                     </ul>
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <motion.a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="text-accent hover:text-fg focus-visible:ring-ring-focus text-sm font-medium underline-offset-4 hover:underline focus-visible:rounded focus-visible:ring-2 focus-visible:outline-none"
-                      whileHover={{ scale: 1.03 }}
-                    >
-                      {t('projects.viewGithub')}
-                    </motion.a>
+                    {project.githubUrl ? (
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="text-accent hover:text-fg focus-visible:ring-ring-focus text-sm font-medium underline-offset-4 hover:underline focus-visible:rounded focus-visible:ring-2 focus-visible:outline-none"
+                        whileHover={{ scale: 1.03 }}
+                      >
+                        {t('projects.viewGithub')}
+                      </motion.a>
+                    ) : null}
                     {project.liveUrl ? (
                       <motion.a
                         href={project.liveUrl}

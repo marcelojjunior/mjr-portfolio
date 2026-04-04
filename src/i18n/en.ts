@@ -34,34 +34,44 @@ export const en = {
     viewGithub: 'GitHub',
     viewLive: 'Live demo',
     items: {
-      commerce: {
-        name: 'Commerce platform API',
+      weather: {
+        name: 'WeatherApp',
         description:
-          'Problem: slow checkout and fragile integrations. Solution: redesigned API layer with caching, idempotent payments, and observability.',
+          'Mobile weather app with intelligent city search, real-time conditions, and an extended forecast for the next 6 days.',
         impact: [
-          'Reduced API response time by ~40%',
-          'Handled 10k+ requests/day at peak',
-          'Improved checkout completion through clearer error handling',
+          'Search flow with automatic suggestions for cities worldwide',
+          'Local search history with offline support and connectivity checks',
+          'Single mobile experience for current weather, last update timestamp, and 6-day forecast',
         ],
       },
-      mobile: {
-        name: 'Field operations mobile app',
+      talents: {
+        name: 'Talent Fair Scoring',
         description:
-          'Problem: offline-first workflows missing on legacy tools. Solution: React Native app with sync queue and conflict resolution.',
+          'Web system for managing Talent Fair scoring, including classes, criteria, teachers, students, and progress tracking throughout the year.',
         impact: [
-          'Cut data entry time for field teams',
-          'Reliable offline mode with background sync',
-          'Shipped to iOS and Android from a single codebase',
+          'Dedicated dashboards and workflows for admins, teachers, and evaluators',
+          'Score calculation by criteria, yearly totals, and chart-based views per student and class',
+          'Centralized operation with Firebase Auth, Firestore, and a responsive admin interface',
         ],
       },
-      internal: {
-        name: 'Internal admin dashboard',
+      vmfight: {
+        name: 'VM Fight',
         description:
-          'Problem: fragmented tools for ops. Solution: unified React dashboard with role-based access and real-time metrics.',
+          'Institutional landing page for a martial arts gym focused on trial-class conversion, showcasing modalities, schedules, instructors, and location.',
         impact: [
-          'Consolidated workflows into one interface',
-          'Faster decisions with live operational data',
-          'Type-safe frontend with TypeScript',
+          'Hero section with video and copy optimized for WhatsApp conversion',
+          'Complete sections for modalities, class schedule, instructors, and embedded map',
+          'Rich visual experience with reveal animations and progressive media loading',
+        ],
+      },
+      mbgestor: {
+        name: 'MB Gestor',
+        description:
+          'Operational and financial management system for construction projects, covering income, expenses, reserves, clients, employees, tasks, and a centralized dashboard.',
+        impact: [
+          'Dashboard with financial metrics, charts, and recent business activity',
+          'Project management linked to clients, with operational calendar and status tracking',
+          'Unified admin flows for staff, daily payments, categories, tasks, and history',
         ],
       },
     },
