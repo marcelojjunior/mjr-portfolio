@@ -85,40 +85,22 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const STACK_GROUPS: StackGroup[] = [
   {
-    id: 'frontend',
-    labelKey: 'stack.groups.frontend',
+    id: 'main',
+    labelKey: 'stack.groups.main',
     items: [
       'React',
       'Next.js',
-      'JavaScript',
+      'React Native',
       'TypeScript',
-      'HTML',
-      'CSS',
       'Tailwind',
-      'Bootstrap',
-    ],
-  },
-  {
-    id: 'backend',
-    labelKey: 'stack.groups.backend',
-    items: [
-      'Firebase',
-      'WordPress',
-      'PHP',
-      'Laravel',
-      'Docker',
       'Node.js',
-      'MySQL',
+      'WordPress',
+      'Firebase',
     ],
-  },
-  {
-    id: 'mobile',
-    labelKey: 'stack.groups.mobile',
-    items: ['React Native', 'Expo'],
   },
   {
     id: 'tools',
     labelKey: 'stack.groups.tools',
-    items: ['Git', 'GitHub', 'GitLab', 'Vercel', 'Linux', 'macOS'],
+    items: ['Git', 'GitHub', 'Docker', 'Vercel'],
   },
 ]

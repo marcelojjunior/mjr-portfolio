@@ -28,7 +28,7 @@ export const en = {
   },
   projects: {
     title: 'Projects',
-    subtitle: 'Projects that show how I turn problems into solutions with real outcomes.',
+    subtitle: 'Some of the projects I have worked on and built.',
     featured: 'Featured',
     impactLabel: 'Impact',
     viewGithub: 'GitHub',
@@ -37,48 +37,48 @@ export const en = {
       weather: {
         name: 'WeatherApp',
         description:
-          'Mobile weather app with intelligent city search, real-time conditions, and an extended forecast for the next 6 days.',
+          'Mobile weather app with intelligent city search, real-time conditions, and extended forecasts in a fast and focused experience.',
         impact: [
-          'Search flow with automatic suggestions for cities worldwide',
-          'Local search history with offline support and connectivity checks',
-          'Single mobile experience for current weather, last update timestamp, and 6-day forecast',
+          'Weather lookup with assisted search for cities worldwide',
+          'Mobile experience designed for fast access to current and upcoming forecasts',
+          'Local history persistence and support for low-connectivity scenarios',
         ],
       },
       talents: {
         name: 'Talent Fair Scoring',
         description:
-          'Web system for managing Talent Fair scoring, including classes, criteria, teachers, students, and progress tracking throughout the year.',
+          'Web-based scoring management system for the Talent Fair, covering criteria, students, teachers, and continuous progress tracking throughout the year.',
         impact: [
-          'Dedicated dashboards and workflows for admins, teachers, and evaluators',
-          'Score calculation by criteria, yearly totals, and chart-based views per student and class',
-          'Centralized operation with Firebase Auth, Firestore, and a responsive admin interface',
+          'Centralizes registration, evaluation, and follow-up workflows in a single system',
+          'Organizes dedicated flows for admins, teachers, and evaluators with tailored dashboards',
+          'Improves visibility into student progress through automatic calculations and chart-based views',
         ],
       },
       vmfight: {
         name: 'VM Fight',
         description:
-          'Institutional landing page for a martial arts gym focused on trial-class conversion, showcasing modalities, schedules, instructors, and location.',
+          'Institutional landing page built to strengthen the gym’s digital presence and guide users toward booking a trial class.',
         impact: [
-          'Hero section with video and copy optimized for WhatsApp conversion',
-          'Complete sections for modalities, class schedule, instructors, and embedded map',
-          'Rich visual experience with reveal animations and progressive media loading',
+          'Navigation structure designed to present classes, schedules, instructors, and location clearly',
+          'Copy and calls to action focused on WhatsApp conversion',
+          'More engaging visual experience with video, reading rhythm, and smooth transitions',
         ],
       },
       mbgestor: {
         name: 'MB Gestor',
         description:
-          'Operational and financial management system for construction projects, covering income, expenses, reserves, clients, employees, tasks, and a centralized dashboard.',
+          'Operational and financial management system for construction projects, bringing income, expenses, reserves, staff, clients, and tasks together in one panel.',
         impact: [
-          'Dashboard with financial metrics, charts, and recent business activity',
-          'Project management linked to clients, with operational calendar and status tracking',
-          'Unified admin flows for staff, daily payments, categories, tasks, and history',
+          'Consolidates financial and administrative operations into a centralized interface',
+          'Improves business visibility with dashboard metrics, charts, and movement history',
+          'Supports project management with calendar views, status tracking, team management, and client follow-up',
         ],
       },
     },
   },
   experience: {
-    title: 'Experience',
-    subtitle: 'My journey building products, leading delivery, and solving technical challenges.',
+    title: 'Experiences',
+    subtitle: 'Some of the professional experiences that have shaped my journey so far.',
     items: {
       soulloop: {
         company: 'Soulloop',
@@ -158,17 +158,15 @@ export const en = {
   },
   stack: {
     title: 'Stack',
-    subtitle: 'Technologies I use to take ideas from concept to production.',
+    subtitle: 'Technologies that are part of my day-to-day development work.',
     groups: {
-      mobile: 'Mobile',
-      backend: 'Backend',
-      frontend: 'Frontend',
+      main: 'Main Stack',
       tools: 'Tools',
     },
   },
   contact: {
     title: 'Contact',
-    subtitle: "If you'd like to talk about a project, product, or opportunity, I'm here.",
+    subtitle: 'If you want to get in touch, these are the channels where you can find me.',
     emailAria: 'Send email to Marcelo Junior',
     externalAria: 'Opens in a new tab',
     cards: {

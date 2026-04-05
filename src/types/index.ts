@@ -22,7 +22,7 @@ export type ExperienceItem = {
   bulletsPath: string
 }
 
-export type StackGroupId = 'mobile' | 'backend' | 'frontend' | 'tools'
+export type StackGroupId = 'main' | 'tools'
 
 export type StackGroup = {
   id: StackGroupId

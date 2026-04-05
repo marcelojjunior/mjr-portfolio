@@ -30,7 +30,7 @@ export const ptBR = {
   },
   projects: {
     title: 'Projetos',
-    subtitle: 'Projetos que mostram como transformo problema em solução com resultado real.',
+    subtitle: 'Alguns dos projetos em que já trabalhei e desenvolvi.',
     featured: 'Destaque',
     impactLabel: 'Impacto',
     viewGithub: 'GitHub',
@@ -39,48 +39,48 @@ export const ptBR = {
       weather: {
         name: 'WeatherApp',
         description:
-          'Aplicativo mobile de previsão do tempo com busca inteligente de cidades, consulta em tempo real e forecast estendido para os próximos 6 dias.',
+          'Aplicativo mobile de clima com busca inteligente de cidades, condições em tempo real e previsão estendida em uma experiência rápida e objetiva.',
         impact: [
-          'Busca com sugestões automáticas para cidades do mundo todo',
-          'Histórico local de pesquisas com suporte offline e verificação de conectividade',
-          'Experiência mobile com clima atual, última atualização e previsão de 6 dias em um único fluxo',
+          'Consulta de clima com busca assistida para cidades do mundo todo',
+          'Experiência mobile pensada para acesso rápido à previsão atual e dos próximos dias',
+          'Persistência de histórico local e suporte a cenários com baixa conectividade',
         ],
       },
       talents: {
         name: 'Feira de Talentos — Pontuação',
         description:
-          'Sistema web para controle de pontuação da Feira de Talentos, com gestão de classes, critérios, professores, alunos e acompanhamento da evolução ao longo do ano.',
+          'Sistema web de gestão de pontuação para a Feira de Talentos, com controle de critérios, alunos, professores e acompanhamento contínuo ao longo do ano.',
         impact: [
-          'Fluxos separados para administrador, professor e avaliador com dashboards dedicados',
-          'Cálculo de pontuação por critério, totais anuais e visualizações em gráficos por aluno e turma',
-          'Operação centralizada com Firebase Auth, Firestore e interface administrativa responsiva',
+          'Centraliza a operação de cadastro, avaliação e acompanhamento em um único sistema',
+          'Organiza fluxos distintos para administrador, professor e avaliador com dashboards dedicados',
+          'Facilita a leitura da evolução dos alunos com cálculos automáticos e visualização em gráficos',
         ],
       },
       vmfight: {
         name: 'VM Fight',
         description:
-          'Landing page institucional para academia de artes marciais com foco em conversão para aula experimental, apresentação das modalidades, horários, professores e localização.',
+          'Landing page institucional desenvolvida para fortalecer a presença digital da academia e direcionar usuários para o agendamento de aula experimental.',
         impact: [
-          'Hero com vídeo e copy orientados à conversão para WhatsApp',
-          'Seções completas com modalidades, grade de horários, equipe e mapa integrado',
-          'Experiência visual rica com animações de entrada e carregamento progressivo de mídia',
+          'Estrutura de navegação pensada para apresentar modalidades, horários, equipe e localização com clareza',
+          'Copy e chamadas de ação orientadas à conversão via WhatsApp',
+          'Experiência visual mais envolvente com vídeo, ritmo de leitura e transições suaves',
         ],
       },
       mbgestor: {
         name: 'MB Gestor',
         description:
-          'Sistema de gestão operacional e financeira para obras, com controle de ganhos, gastos, reservas, clientes, funcionários, tarefas e acompanhamento centralizado em dashboard.',
+          'Sistema de gestão operacional e financeira para obras, reunindo controle de entradas, saídas, reservas, equipe, clientes e tarefas em um único painel.',
         impact: [
-          'Dashboard com métricas financeiras, gráficos e últimas movimentações do negócio',
-          'Gestão de obras vinculadas a clientes, com calendário operacional e acompanhamento de status',
-          'Fluxos administrativos para equipe, diárias, categorias, tarefas e histórico em uma única aplicação',
+          'Consolida a operação financeira e administrativa em uma interface centralizada',
+          'Melhora a visibilidade do negócio com dashboard, gráficos e histórico de movimentações',
+          'Apoia a gestão de obras com calendário, status, equipe e acompanhamento por cliente',
         ],
       },
     },
   },
   experience: {
-    title: 'Experiência',
-    subtitle: 'Minha trajetória construindo produtos, liderando entregas e resolvendo desafios técnicos.',
+    title: 'Experiências',
+    subtitle: 'Algumas das experiências profissionais que construíram minha trajetória até aqui.',
     items: {
       soulloop: {
         company: 'Soulloop',
@@ -160,17 +160,15 @@ export const ptBR = {
   },
   stack: {
     title: 'Stack',
-    subtitle: 'Tecnologias que uso para tirar ideias do papel e colocar produto no ar.',
+    subtitle: 'Tecnologias que fazem parte do meu dia a dia de desenvolvimento.',
     groups: {
-      mobile: 'Mobile',
-      backend: 'Backend',
-      frontend: 'Frontend',
+      main: 'Main Stack',
       tools: 'Ferramentas',
     },
   },
   contact: {
     title: 'Contato',
-    subtitle: 'Se quiser conversar sobre projeto, produto ou oportunidade, eu estou por aqui.',
+    subtitle: 'Se quiser entrar em contato, esses são os canais por onde você pode me encontrar.',
     emailAria: 'Enviar e-mail para Marcelo Junior',
     externalAria: 'Abre em uma nova aba',
     cards: {
