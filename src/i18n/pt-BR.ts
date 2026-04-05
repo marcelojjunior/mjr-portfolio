@@ -4,7 +4,7 @@ export const ptBR = {
   nav: {
     home: 'Início',
     projects: 'Projetos',
-    experience: 'Experiência',
+    experience: 'Experiências',
     stack: 'Stack',
     contact: 'Contato',
   },
