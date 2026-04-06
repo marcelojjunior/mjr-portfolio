@@ -84,7 +84,7 @@ export const en = {
         company: 'Soulloop',
         role: 'Software Engineer',
         period: 'October 2025 — Present',
-        workModel: 'Remote',
+        workModel: 'Hybrid',
         location: 'São Paulo, SP',
         bullets: [
           'Work on the maintenance and evolution of a React Native mobile application, implementing features and resolving critical bugs',

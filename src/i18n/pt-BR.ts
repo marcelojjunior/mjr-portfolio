@@ -86,7 +86,7 @@ export const ptBR = {
         company: 'Soulloop',
         role: 'Software Engineer',
         period: 'Outubro 2025 — Presente',
-        workModel: 'Remoto',
+        workModel: 'Híbrido',
         location: 'São Paulo-SP',
         bullets: [
           'Atuo na manutenção e evolução de um aplicativo mobile em React Native, implementando funcionalidades e resolvendo bugs críticos',
