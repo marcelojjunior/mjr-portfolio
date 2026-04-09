@@ -30,6 +30,13 @@ const Analytics = lazy(async () => {
   return { default: AnalyticsComponent }
 })
 
+const SpeedInsights = lazy(async () => {
+  const { SpeedInsights: SpeedInsightsComponent } = await import(
+    '@vercel/speed-insights/react'
+  )
+  return { default: SpeedInsightsComponent }
+})
+
 function SectionFallback() {
   return (
     <div className="text-fg-muted py-20 text-center font-mono text-sm">
@@ -85,6 +92,7 @@ export default function App() {
       </IntroGateProvider>
       <Suspense fallback={null}>
         <Analytics />
+        <SpeedInsights />
       </Suspense>
     </AppProviders>
   )
