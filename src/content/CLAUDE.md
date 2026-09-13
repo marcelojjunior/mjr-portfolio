@@ -52,8 +52,8 @@ been confirmed is `placeholder: true`.
 
 ## Tone
 
-Run every draft through the `humanizer` skill in `.claude/skills/humanizer/` before writing the
-file. It is not optional and it is not a final polish: draft, humanize, then save.
+Draft with the `copywriting` skill, then run the result through `humanizer`, then save. Both live
+in `.claude/skills/`. Neither step is optional, and `humanizer` always goes last.
 
 First person. Concrete. Past tense for what was done.
 

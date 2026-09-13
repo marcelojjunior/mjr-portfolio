@@ -4,7 +4,7 @@ import { render, type CollectionEntry } from 'astro:content'
 import portrait from '@/assets/portrait.jpeg'
 import { PERSON, JOB_TITLE, type Locale } from '@/config/site'
 import { EXPERIENCE } from '@/config/experience'
-import { STACK } from '@/config/stack'
+import { SKILL_GROUPS } from '@/config/skills'
 import { iconPath } from '@/lib/icons'
 import { useTranslations } from '@/i18n/ui'
 import { projectsPath } from '@/lib/i18n'
@@ -19,11 +19,15 @@ const t = useTranslations(locale)
 const { Content } = await render(entry)
 
 const current = EXPERIENCE[0]!
-const tools = STACK.map((tech) => ({ ...tech, path: iconPath(tech.icon) }))
+const groups = SKILL_GROUPS.map((group) => ({
+  ...group,
+  items: group.items.map((tech) => ({ ...tech, path: iconPath(tech.icon) })),
+}))
 
 const facts = [
   { label: t('about.now'), value: `${current.role[locale]} · ${current.company}` },
   { label: t('about.based'), value: `${PERSON.location.city}, Brasil` },
+  { label: t('about.education'), value: t('about.educationValue') },
   { label: t('about.languages'), value: t('about.languagesValue') },
 ]
 ---
@@ -56,20 +60,29 @@ const facts = [
     </aside>
   </div>
 
-  <section class="tools">
-    <h2>{t('about.toolsTitle')}</h2>
-    <ul>
-      {tools.map((tech) => (
-        <li>
-          {tech.path && (
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
-              <path d={tech.path} />
-            </svg>
-          )}
-          {tech.label}
-        </li>
+  <section class="skills">
+    <h2>{t('about.skillsTitle')}</h2>
+    <dl>
+      {groups.map((group) => (
+        <div class="skills__group">
+          <dt>{group.label[locale]}</dt>
+          <dd>
+            <ul>
+              {group.items.map((tech) => (
+                <li>
+                  {tech.path && (
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                      <path d={tech.path} />
+                    </svg>
+                  )}
+                  {tech.label}
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
       ))}
-    </ul>
+    </dl>
   </section>
 
   <section class="next">
@@ -111,6 +124,11 @@ const facts = [
   .about__grid > * {
     min-width: 0;
   }
+
+  /* Below two columns the portrait and the facts come first, so a phone shows who
+     this is before the reading starts. */
+  .about__prose { order: 2; }
+  .about__side { order: 1; }
   @media (min-width: 900px) {
     .about__grid { grid-template-columns: minmax(0, 1fr) 17rem; align-items: start; }
   }
@@ -135,8 +153,27 @@ const facts = [
     display: grid;
     gap: 1.5rem;
     align-content: start;
-    position: sticky;
-    top: 6rem;
+  }
+  @media (max-width: 899px) {
+    /* A full-width 4:5 portrait would fill a phone screen on its own. */
+    .about__side { justify-items: start; }
+    .portrait { width: min(14rem, 55%); }
+  }
+  @media (min-width: 560px) and (max-width: 899px) {
+    .about__side {
+      grid-template-columns: min(14rem, 35%) minmax(0, 1fr);
+      align-items: start;
+    }
+    .portrait { width: 100%; }
+  }
+  @media (min-width: 900px) {
+    .about__prose { order: 0; }
+    .about__side {
+      order: 0;
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
   }
 
   .portrait {
@@ -169,12 +206,38 @@ const facts = [
     line-height: 1.45;
   }
 
-  .tools { margin-top: clamp(3rem, 7vw, 5rem); }
-  .tools h2 {
+  .skills { margin-top: clamp(3rem, 7vw, 5rem); }
+  .skills h2 {
     font-size: clamp(1.4rem, 3vw, 2rem);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
-  .tools ul {
+  .skills dl {
+    margin: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .skills__group {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+  @media (min-width: 700px) {
+    .skills__group {
+      grid-template-columns: 13rem minmax(0, 1fr);
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+  }
+  .skills dt {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .skills dd { margin: 0; }
+  .skills ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -182,7 +245,7 @@ const facts = [
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-  .tools li {
+  .skills li {
     display: flex;
     align-items: center;
     gap: 0.45rem;
@@ -191,9 +254,9 @@ const facts = [
     padding: 0.45rem 0.75rem;
     border: 1px solid var(--color-line);
     border-radius: 999px;
-    color: var(--color-dim);
+    color: var(--color-ink);
   }
-  .tools svg { color: var(--color-accent); }
+  .skills svg { color: var(--color-accent); }
 
   .next {
     margin-top: clamp(3rem, 7vw, 5rem);

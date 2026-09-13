@@ -49,9 +49,18 @@ Do not bump it to 7 to "fix" a warning.
 
 ## Writing content
 
-Every word a visitor reads goes through the `humanizer` skill in `.claude/skills/humanizer/`
-before it is written to a file: hero copy, project summaries, case bodies, the about page, UI
-strings, meta descriptions, in both locales.
+Every word a visitor reads passes two skills in `.claude/skills/` before it is written to a file:
+hero copy, project summaries, case bodies, the about page, UI strings, meta descriptions, in both
+locales.
+
+1. `copywriting` shapes the draft: one idea per section, benefit before feature, specific over
+   vague, customer language over company language, and a CTA that says what the reader gets.
+2. `humanizer` strips the AI tells from that draft, and it goes last.
+
+The order matters. `copywriting` is a marketing skill and will happily reach for the staged
+contrast, the triad and the one-line closer that `humanizer` exists to remove. Two of its defaults
+are also overruled here: this site never invents a statistic or a testimonial, and it does not use
+rhetorical-question headlines, which read as salesy in a personal portfolio.
 
 It does not apply to project artefacts. This file, `CONTEXT.md`, ADRs, code comments and commit
 messages are technical writing for developers and stay as they are.
