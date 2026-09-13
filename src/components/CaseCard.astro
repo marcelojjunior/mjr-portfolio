@@ -14,7 +14,7 @@ interface Props {
 const { entry, locale } = Astro.props
 const t = useTranslations(locale)
 const slug = slugOf(entry)
-const { title, summary, tags, cover, images } = entry.data
+const { title, summary, tags, cover, images, kind } = entry.data
 
 /**
  * Resting frame first, then up to three more that crossfade while the pointer is on the card.
@@ -31,7 +31,7 @@ const href = projectPath(locale, slug)
 
 <a class="card" href={href} data-cursor-grow>
   <div class="card__media">
-    <span class="card__badge">{t('work.badge')}</span>
+    <span class="card__badge">{kind}</span>
 
     {frames.length > 0 ? (
       <div class="shots">
@@ -66,8 +66,12 @@ const href = projectPath(locale, slug)
 </a>
 
 <style>
+  /* Column layout so tags and the link sit on the card's bottom edge,
+     whatever the description length of the card beside it. */
   .card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     text-decoration: none;
     color: inherit;
     background: var(--color-raised);
@@ -182,14 +186,14 @@ const href = projectPath(locale, slug)
     font-size: 0.95rem;
     line-height: 1.55;
     margin: 0.5rem 0 0;
-    max-width: 46ch;
   }
 
   .card__tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.375rem;
-    margin-top: 0.875rem;
+    margin-top: auto;
+    padding-top: 0.875rem;
   }
   .card__tags span {
     font-family: var(--font-mono);
@@ -218,6 +222,7 @@ const href = projectPath(locale, slug)
   .card:hover .card__tags span:nth-child(5) { transition-delay: 0.16s; }
 
   .card__go {
+    align-self: flex-start;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;

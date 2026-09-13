@@ -25,7 +25,6 @@ export const ui = {
     'work.title': 'Alguns dos projetos que construí, e as decisões por trás deles.',
     'work.listTitle': 'O que eu construí',
     'work.open': 'Ver projeto',
-    'work.badge': 'Ver projeto',
 
     'path.eyebrow': 'Experiências',
     'path.title': 'Algumas das experiências profissionais que construíram minha trajetória.',
@@ -99,7 +98,6 @@ export const ui = {
     'work.title': 'A few of the projects I built, and the decisions behind them.',
     'work.listTitle': 'What I have built',
     'work.open': 'View project',
-    'work.badge': 'View project',
 
     'path.eyebrow': 'Experiences',
     'path.title': 'Some of the professional experience that shaped my path.',
