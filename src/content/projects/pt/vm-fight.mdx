@@ -1,28 +1,81 @@
 ---
 title: VM Fight
-summary: Landing de uma academia de luta, feita para uma coisa só — encher a aula experimental.
+summary: 'Landing page de uma academia de artes marciais em São Paulo, feita para levar o visitante até a aula experimental, marcada pelo WhatsApp.'
 role: Desenvolvedor único
-period: '2026'
+period: Novembro de 2025
 kind: Landing page
-stack: [React, TypeScript, Vite, Tailwind CSS]
-tags: [React, Vite, 'Conversão']
+stack: [React, TypeScript, Vite, Tailwind CSS, 'Google Maps API', Vercel]
+tags: [React, TypeScript, Vite, Tailwind CSS, Vercel]
 preview: frames
-links: {}
+cover: ./../../../assets/projects/vm-fight/hero.png
+images:
+  - src: ./../../../assets/projects/vm-fight/hero.png
+    alt: Topo da página da VM Fight com um vídeo de treino ao fundo, os títulos "Força. Foco. Disciplina." e "A evolução começa aqui." e o botão de agendar aula experimental
+  - src: ./../../../assets/projects/vm-fight/modalidades.png
+    alt: Seção de modalidades com quatro cartões, Muay Thai, Muay Thai Kids, Boxe e Jiu-Jitsu, cada um com imagem, descrição e botão de agendar aula experimental
+  - src: ./../../../assets/projects/vm-fight/horarios.png
+    alt: Grade de horários de segunda a sábado, com cada aula colorida pela modalidade, das 7h às 19h30
+video: /projects/vm-fight/walkthrough.mp4
+links:
+  live: https://www.vmfight.com.br/
 ---
 
 ## Visão geral
 
-Uma academia de luta precisava de uma página que fizesse uma coisa só: transformar quem chega
-do Instagram em aluno da aula experimental.
+A VM Fight é uma academia de artes marciais na Bela Vista, em São Paulo, com aulas de Muay Thai,
+Muay Thai Kids, Boxe e Jiu-Jitsu. Até então ela não tinha site: toda a divulgação acontecia no
+Instagram e no WhatsApp.
+
+Conversei com o proprietário e desenvolvi o site sozinho, para ajudar a academia a ser encontrada e
+a transformar quem chega em aluno. A página reúne as quatro modalidades, a grade de horários da
+semana, os instrutores e o contato com o mapa, e leva o visitante até a aula experimental, que é
+gratuita.
 
 ## Decisões técnicas
 
-### Decisão a preencher
+### Horários e instrutores ficam em arquivos de dados
 
-Descreva aqui a escolha técnica e por que ela foi necessária neste projeto.
+A grade de horários e a lista de instrutores ficam em arquivos JSON. A grade tem uma linha por
+horário e uma coluna por dia, e a cor de cada aula sai da modalidade, então trocar Boxe por
+Jiu-Jitsu numa terça é editar uma célula.
 
-> **O que isso custou:** o trade-off que você aceitou, em uma frase.
+> **O que isso custou:** a separação entre dado e código não é completa. Um instrutor novo exige
+> editar o JSON e também importar a foto no componente, porque o Vite não resolve o caminho da
+> imagem escrito no JSON. E uma modalidade que o componente não conhece aparece sem cor na grade.
+
+### SEO e GEO sem pré-renderizar a página
+
+O site é uma SPA em React, sem renderização no servidor, então quem não executa JavaScript recebia
+uma página vazia. Isso inclui os robôs das ferramentas de IA. Em vez de pré-renderizar o React no
+build, coloquei os fatos da academia direto no HTML estático: dados estruturados em JSON-LD com
+endereço, telefone e modalidades, além de `llms.txt` com horários e instrutores, `robots.txt` e
+sitemap. Um script confere esses arquivos a cada build.
+
+> **O que isso custou:** um robô que não executa JavaScript lê os fatos da academia, mas não o
+> texto da página. Pré-renderizar entregaria tudo, só que exigiria adaptar para o servidor a
+> animação de digitação do título, os vídeos e o mapa do Google, com risco de a página quebrar ao
+> carregar. Deixei a pré-renderização como próximo passo, caso o Search Console mostre que falta
+> cobertura.
+
+### Todo agendamento termina no WhatsApp
+
+Cada botão de agendar aula experimental abre uma conversa com a academia, com a mensagem já
+escrita, inclusive nos cartões de cada modalidade. O WhatsApp já era o canal da academia, então a
+página leva o visitante direto para lá, sem formulário e sem backend.
+
+> **O que isso custou:** o agendamento acontece fora do site. A página mede as visitas, mas não
+> quantas conversas viraram aula marcada, porque essa parte acontece no WhatsApp.
 
 ## Resultados e aprendizados
 
-O que mudou por causa do projeto, e o que você faria diferente hoje.
+O site passou a trazer alunos que encontraram a academia buscando no Google, e mais gente começou a
+conhecer o lugar pelo site antes de mandar mensagem no WhatsApp. Os vídeos e as fotos dos treinos
+ajudam a passar credibilidade para quem ainda não conhece a academia.
+
+O trabalho de SEO e GEO veio depois do site no ar, e foi ali que ficou claro que uma SPA chega vazia
+para quem não executa JavaScript. Os dados da academia precisavam estar no próprio HTML para os
+robôs de busca e de IA conseguirem ler.
+
+A performance foi o outro aprendizado, porque a página tem muitos vídeos. A primeira versão só
+mostrava a página depois de carregar os seis vídeos, que somam cerca de 51 MB, e a abertura levava
+em média 10 segundos. Hoje ela espera só o vídeo do topo e leva cerca de 2 segundos.

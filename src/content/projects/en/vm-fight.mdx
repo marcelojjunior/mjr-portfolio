@@ -1,28 +1,79 @@
 ---
 title: VM Fight
-summary: A landing page for a fight gym, built to do one thing — fill the trial class.
+summary: 'A landing page for a martial arts gym in São Paulo, built to bring visitors to a free trial class booked over WhatsApp.'
 role: Sole developer
-period: '2026'
+period: November 2025
 kind: Landing page
-stack: [React, TypeScript, Vite, Tailwind CSS]
-tags: [React, Vite, 'Conversion']
+stack: [React, TypeScript, Vite, Tailwind CSS, 'Google Maps API', Vercel]
+tags: [React, TypeScript, Vite, Tailwind CSS, Vercel]
 preview: frames
-links: {}
+cover: ./../../../assets/projects/vm-fight/hero.png
+images:
+  - src: ./../../../assets/projects/vm-fight/hero.png
+    alt: Top of the VM Fight page with a training video in the background, the headlines "Força. Foco. Disciplina." and "A evolução começa aqui.", and the button to book a trial class
+  - src: ./../../../assets/projects/vm-fight/modalidades.png
+    alt: Classes section with four cards, Muay Thai, Muay Thai Kids, Boxing and Jiu-Jitsu, each with an image, a description and a button to book a trial class
+  - src: ./../../../assets/projects/vm-fight/horarios.png
+    alt: Weekly timetable from Monday to Saturday, with each class coloured by discipline, from 7am to 7:30pm
+video: /projects/vm-fight/walkthrough.mp4
+links:
+  live: https://www.vmfight.com.br/
 ---
 
 ## Overview
 
-A fight gym needed a page that did one thing: turn people arriving from Instagram into
-trial-class students.
+VM Fight is a martial arts gym in Bela Vista, São Paulo, teaching Muay Thai, Muay Thai Kids, Boxing
+and Jiu-Jitsu. Until then it had no website: all of its promotion happened on Instagram and
+WhatsApp.
+
+I talked to the owner and built the site on my own, to help the gym get found and turn visitors into
+students. The page brings together the four disciplines, the weekly timetable, the instructors and
+the contact details with a map, and leads visitors to the trial class, which is free.
 
 ## Technical decisions
 
-### Decision to fill in
+### Timetable and instructors live in data files
 
-Describe the technical choice and why this project needed it.
+The timetable and the instructor list live in JSON files. The timetable has one row per time slot
+and one column per day, and each class takes its colour from its discipline, so swapping Boxing for
+Jiu-Jitsu on a Tuesday means editing one cell.
 
-> **What it cost:** the trade-off you accepted, in one sentence.
+> **What it cost:** data and code are not fully separated. A new instructor means editing the JSON
+> and also importing the photo in the component, because Vite cannot resolve an image path written
+> inside JSON. And a discipline the component does not know shows up uncoloured in the timetable.
+
+### SEO and GEO without prerendering the page
+
+The site is a React SPA with no server rendering, so anything that does not run JavaScript received
+an empty page. That includes the crawlers behind AI tools. Instead of prerendering React at build
+time, I put the gym's facts straight into the static HTML: JSON-LD structured data with the address,
+phone and disciplines, plus an `llms.txt` with the timetable and instructors, a `robots.txt` and a
+sitemap. A script checks those files on every build.
+
+> **What it cost:** a crawler that does not run JavaScript reads the gym's facts but not the page
+> text. Prerendering would deliver everything, but it would mean making the typing animation in the
+> headline, the videos and the Google map work on the server, with a risk of the page breaking as it
+> loads. I left prerendering as the next step, in case Search Console shows missing coverage.
+
+### Every booking ends on WhatsApp
+
+Every button to book a trial class opens a chat with the gym with the message already written,
+including the cards for each discipline. WhatsApp was already the gym's channel, so the page takes
+visitors straight there, with no form and no backend.
+
+> **What it cost:** the booking happens outside the site. The page measures visits, but not how many
+> chats turned into a booked class, because that part happens on WhatsApp.
 
 ## Results and lessons
 
-What changed because the project exists, and what you would do differently today.
+The site started bringing in students who found the gym by searching on Google, and more people got
+to know the place through the site before messaging on WhatsApp. The training videos and photos help
+build trust with people who do not know the gym yet.
+
+The SEO and GEO work came after the site was live, and that is where it became clear that an SPA
+arrives empty for anything that does not run JavaScript. The gym's details had to be in the HTML
+itself for search and AI crawlers to read them.
+
+Performance was the other lesson, because the page has a lot of video. The first version only showed
+the page after loading all six videos, about 51 MB in total, and the opening took around 10 seconds
+on average. It now waits only for the top video and takes about 2 seconds.
