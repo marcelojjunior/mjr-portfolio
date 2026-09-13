@@ -1,0 +1,47 @@
+---
+title: Hotel Management
+summary: A multi-tenant SaaS for a guesthouse group — Laravel API, Next.js dashboard, built solo.
+role: Sole developer
+period: '2026'
+kind: Multi-tenant SaaS
+stack: [Laravel, 'PHP 8', PostgreSQL, 'Next.js', TypeScript, Tailwind CSS]
+tags: [Laravel, PostgreSQL, Multi-tenant]
+preview: frames
+links: {}
+---
+
+## Overview
+
+> **Unconfirmed draft.** I wrote the two decisions below from the repository description, before you
+> gave me the facts. Confirm, correct or replace them.
+
+A group of guesthouses ran their bookings on shared spreadsheets. Every property had its own, each
+with its own pricing rules, and nobody could answer a simple question: how many rooms are free next
+week, across all of them?
+
+I built the whole platform, a Laravel API and a Next.js dashboard. One requirement shaped the
+architecture: it had to be multi-tenant. Each property needed its own data, users and rates without
+turning into six separate installations to maintain.
+
+## Technical decisions
+
+### One database, tenant isolation at the query layer
+
+Instead of a database per property, I used a single schema with `tenant_id` on every table and a
+global Eloquent scope that never lets a query escape the current tenant.
+
+> **What it cost:** a bug in that scope leaks data between clients, a risk separate databases would
+> not carry. I took it because running migrations across six databases on every release would have
+> been the everyday problem, and leakage is the kind of problem tests can cover.
+
+### Availability computed in the database
+
+Searching for free rooms became a date-range query in PostgreSQL rather than loading every booking
+and cross-checking it in PHP.
+
+> **What it cost:** the most important business rule in the system lives in SQL, out of reach of
+> unit tests. In exchange, the search answers in constant time as the group grows.
+
+## Results and lessons
+
+What changed because the project exists, and what you would do differently today.

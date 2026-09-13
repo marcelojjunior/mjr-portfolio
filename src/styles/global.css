@@ -1,0 +1,175 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Design tokens — the single source of colour, type and motion.
+   Components consume these; a raw value inside a component is a bug.
+   Direction: "Signal" — geometric display, one electric-cyan accent, dark-first.
+   ========================================================================== */
+
+:root {
+  /* type */
+  --font-display: 'Clash Display', 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* light palette (neutrals biased cool, toward the accent) */
+  --color-ground: #eef3f4;
+  --color-raised: #ffffff;
+  --color-sunken: #e2eaec;
+  --color-ink: #0c1416;
+  --color-dim: #5a6a6e;
+  --color-line: #cfdadd;
+  --color-accent: #0b7d88;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #d6ebee;
+
+  /* layout — one gutter and one content width, shared by the header and every page */
+  --content-width: 1180px;
+  --gutter: clamp(1.125rem, 5vw, 3rem);
+  /* Vertical rhythm between sections. Anything that separates two blocks uses this. */
+  --section-gap: clamp(3.25rem, 8vw, 6.5rem);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --dur-fast: 0.25s;
+  --dur-base: 0.4s;
+}
+
+/* No-JS / no-stamp fallback: honour the device. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-ground: #08100f;
+    --color-raised: #101a1b;
+    --color-sunken: #0c1516;
+    --color-ink: #e8f2f1;
+    --color-dim: #8199a0;
+    --color-line: #1e2c2e;
+    --color-accent: #3ae0d6;
+    --color-accent-ink: #04100f;
+    --color-accent-soft: #0f2b2c;
+  }
+}
+
+/* Stamped by the inline script in BaseLayout — wins in both directions. */
+:root[data-theme='dark'] {
+  --color-ground: #08100f;
+  --color-raised: #101a1b;
+  --color-sunken: #0c1516;
+  --color-ink: #e8f2f1;
+  --color-dim: #8199a0;
+  --color-line: #1e2c2e;
+  --color-accent: #3ae0d6;
+  --color-accent-ink: #04100f;
+  --color-accent-soft: #0f2b2c;
+}
+
+/* Expose the tokens to Tailwind utilities (bg-ground, text-dim, font-display…). */
+@theme inline {
+  --color-ground: var(--color-ground);
+  --color-raised: var(--color-raised);
+  --color-sunken: var(--color-sunken);
+  --color-ink: var(--color-ink);
+  --color-dim: var(--color-dim);
+  --color-line: var(--color-line);
+  --color-accent: var(--color-accent);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-accent-soft: var(--color-accent-soft);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+/* ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  /* Clears the floating header capsule. */
+  padding-top: 4.25rem;
+  /* AppBackground paints the ground; this is the fallback behind it. */
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.002em;
+  line-height: 1;
+  text-wrap: balance;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utility: the mono eyebrow used above every section heading. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.375rem;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Shared page container. The header capsule resolves to the same left edge. */
+.wrap {
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}

@@ -1,0 +1,280 @@
+---
+import { type Locale } from '@/config/site'
+import { alternatePath, otherLocale, projectsPath, aboutPath, localePath, type PageRef } from '@/lib/i18n'
+import { useTranslations } from '@/i18n/ui'
+import ThemeToggle from '@/components/islands/ThemeToggle'
+
+interface Props {
+  locale: Locale
+  page: PageRef
+}
+
+const { locale, page } = Astro.props
+const t = useTranslations(locale)
+const other = otherLocale(locale)
+
+/** Trailing slashes are ignored by the router, so compare without them. */
+const here = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const isHere = (href: string) => here === href || here.startsWith(`${href}/`)
+
+const links = [
+  { href: aboutPath(locale), label: t('nav.about'), current: isHere(aboutPath(locale)) },
+  { href: projectsPath(locale), label: t('nav.work'), current: isHere(projectsPath(locale)) },
+  { href: '#contact', label: t('nav.contact'), current: false },
+]
+---
+
+<header class="hdr">
+  <nav class="hdr__in" aria-label={t('nav.work')}>
+    <a class="hdr__name" href={localePath(locale)}>
+      Marcelo<span>Junior</span>
+    </a>
+
+    <div class="hdr__pill">
+      {links.map((link) => (
+        <a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a>
+      ))}
+    </div>
+
+    <div class="hdr__tools">
+
+      <a class="hdr__lang" href={alternatePath(other, page)} hreflang={other === 'pt' ? 'pt-BR' : 'en'}>
+        {other.toUpperCase()}
+      </a>
+      <ThemeToggle client:idle toLight={t('theme.toLight')} toDark={t('theme.toDark')} />
+      <button
+        class="hdr__burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label={t('nav.menu')}
+        data-burger
+        data-open-label={t('nav.menu')}
+        data-close-label={t('nav.close')}
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="hdr__sheet" id="mobile-nav" data-sheet hidden>
+    <ul>
+      {links.map((link) => (
+        <li>
+          <a href={link.href} data-sheet-link aria-current={link.current ? 'page' : undefined}>
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    padding: 0.875rem var(--gutter);
+    pointer-events: none;
+  }
+
+  .hdr__in {
+    /* Same left edge as the page content: the container is inset by --gutter and the
+       capsule gives that width back, so the capsule edge lands on the text column. */
+    max-width: calc(var(--content-width) - 2 * var(--gutter));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    pointer-events: auto;
+
+    /* One floating capsule, not a full-width bar. */
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.4rem 0.4rem 1.1rem;
+    background: color-mix(in oklab, var(--color-raised) 78%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.55);
+  }
+
+  .hdr__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .hdr__name span {
+    color: var(--color-accent);
+    margin-left: 0.28em;
+  }
+
+  .hdr__pill {
+    display: none;
+    gap: 0.35rem;
+    margin: 0 auto;
+  }
+  @media (min-width: 700px) {
+    .hdr__pill { display: flex; }
+  }
+  .hdr__pill a {
+    text-decoration: none;
+    color: var(--color-dim);
+    font-size: 0.88rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out);
+  }
+  .hdr__pill a:hover {
+    color: var(--color-ink);
+    background: var(--color-accent-soft);
+  }
+  .hdr__pill a[aria-current='page'] {
+    color: var(--color-accent-ink);
+    background: var(--color-accent);
+  }
+
+  .hdr__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+  @media (min-width: 700px) {
+    .hdr__tools { margin-left: 0; }
+  }
+
+  .hdr__lang {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    color: var(--color-dim);
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast);
+  }
+  .hdr__lang:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+  /* --- mobile menu --- */
+  .hdr__burger {
+    display: grid;
+    align-content: center;
+    justify-items: stretch;
+    gap: 4px;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: transparent;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .hdr__burger:hover { border-color: var(--color-accent); }
+  .hdr__burger span {
+    display: block;
+    height: 1.5px;
+    background: var(--color-ink);
+    transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast);
+  }
+  .hdr__burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .hdr__burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .hdr__burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+  @media (min-width: 700px) {
+    .hdr__burger { display: none; }
+  }
+
+  .hdr__sheet {
+    pointer-events: auto;
+    max-width: calc(var(--content-width) - 2 * var(--gutter));
+    margin: 0.5rem auto 0;
+    padding: 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    background: color-mix(in oklab, var(--color-raised) 92%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 16px 40px -22px rgb(0 0 0 / 0.6);
+    animation: sheet-in var(--dur-fast) var(--ease-out);
+  }
+  .hdr__sheet ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.15rem;
+  }
+  .hdr__sheet a {
+    display: block;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast);
+  }
+  .hdr__sheet a:hover { background: var(--color-accent-soft); color: var(--color-accent); }
+  .hdr__sheet a[aria-current='page'] {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  @keyframes sheet-in {
+    from { opacity: 0; transform: translateY(-6px); }
+  }
+
+  @media (min-width: 700px) {
+    .hdr__sheet { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hdr__sheet { animation: none; }
+  }
+</style>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]')
+  const sheet = document.querySelector<HTMLElement>('[data-sheet]')
+
+  if (burger && sheet) {
+    const setOpen = (open: boolean) => {
+      burger.setAttribute('aria-expanded', String(open))
+      burger.setAttribute(
+        'aria-label',
+        (open ? burger.dataset.closeLabel : burger.dataset.openLabel) ?? '',
+      )
+      sheet.hidden = !open
+    }
+
+    burger.addEventListener('click', () => {
+      setOpen(burger.getAttribute('aria-expanded') !== 'true')
+    })
+
+    // Close after navigating, and on Escape.
+    for (const link of sheet.querySelectorAll('[data-sheet-link]')) {
+      link.addEventListener('click', () => setOpen(false))
+    }
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false)
+    })
+    // A resize past the breakpoint must not leave a hidden sheet stuck open.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 700) setOpen(false)
+    })
+  }
+</script>

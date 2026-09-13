@@ -1,0 +1,176 @@
+---
+import { PERSON, type Locale } from '@/config/site'
+import { useTranslations } from '@/i18n/ui'
+import { iconPath, CUSTOM_ICONS } from '@/lib/icons'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const t = useTranslations(locale)
+const year = new Date().getFullYear()
+
+/** Three channels, equal weight — none of them is a footnote to the others. */
+const channels = [
+  {
+    id: 'email',
+    label: t('contact.email'),
+    value: PERSON.email,
+    href: `mailto:${PERSON.email}`,
+    path: CUSTOM_ICONS.mail,
+    external: false,
+  },
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    value: '/in/marcelojjunior',
+    href: PERSON.linkedin,
+    path: CUSTOM_ICONS.linkedin,
+    external: true,
+  },
+  {
+    id: 'github',
+    label: 'GitHub',
+    value: '@marcelojjunior',
+    href: PERSON.github,
+    path: iconPath('siGithub'),
+    external: true,
+  },
+]
+---
+
+<footer class="ft" id="contact">
+  <div class="ft__in">
+    <div class="ft__lead">
+      <p class="eyebrow">{t('contact.eyebrow')}</p>
+      <h2 class="ft__title">{t('contact.title')}</h2>
+      <p class="ft__lede">{t('contact.lede')}</p>
+    </div>
+
+    <ul class="ft__channels">
+      {channels.map((channel) => (
+        <li>
+          <a
+            href={channel.href}
+            rel={channel.external ? 'me noopener' : undefined}
+            target={channel.external ? '_blank' : undefined}
+          >
+            <span class="ft__label">
+              {channel.path && (
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+                  <path d={channel.path} />
+                </svg>
+              )}
+              {channel.label}
+            </span>
+            <span class="ft__value">{channel.value}</span>
+            <span class="ft__arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <p class="ft__fine">© {year} {PERSON.name} · {t('footer.built')}</p>
+</footer>
+
+<style>
+  .ft {
+    border-top: 1px solid var(--color-line);
+    margin-top: clamp(3rem, 8vw, 6rem);
+    padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter) 2.5rem;
+    background: var(--color-sunken);
+  }
+
+  .ft__in {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  @media (min-width: 900px) {
+    .ft__in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: start; }
+  }
+
+  .ft__title {
+    font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+    margin-top: 0.6rem;
+  }
+  .ft__lede {
+    color: var(--color-dim);
+    max-width: 38ch;
+    line-height: 1.6;
+    margin: 1rem 0 0;
+  }
+
+  .ft__channels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.625rem;
+  }
+  .ft__channels a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'label arrow'
+      'value arrow';
+    align-items: center;
+    gap: 0.3rem 1rem;
+    text-decoration: none;
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-raised);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .ft__channels a:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .ft__label {
+    grid-area: label;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .ft__value {
+    grid-area: value;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    overflow-wrap: anywhere;
+  }
+  .ft__arrow {
+    grid-area: arrow;
+    color: var(--color-accent);
+    font-size: 1.05rem;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .ft__channels a:hover .ft__arrow { transform: translate(3px, -3px); }
+
+  .ft__fine {
+    max-width: var(--content-width);
+    margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ft__channels a:hover { transform: none; }
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import '@/styles/global.css'
+import { SITE_URL, LOCALE_TAGS, DEFAULT_LOCALE, PERSON, type Locale } from '@/config/site'
+import { alternatePath, otherLocale , type PageRef } from '@/lib/i18n'
+import { useTranslations } from '@/i18n/ui'
+import AppBackground from '@/components/AppBackground.astro'
+import SiteHeader from '@/components/SiteHeader.astro'
+import SiteFooter from '@/components/SiteFooter.astro'
+import Cursor from '@/components/islands/Cursor'
+import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from '@vercel/speed-insights/astro'
+
+interface Props {
+  locale: Locale
+  title: string
+  description: string
+  /** Identifies this page across locales, so hreflang can point at the real twin. */
+  page: PageRef
+  /** Extra JSON-LD, already stringified by the caller. */
+  jsonLd?: Record<string, unknown>[]
+}
+
+const { locale, title, description, page, jsonLd = [] } = Astro.props
+const t = useTranslations(locale)
+
+const canonical = new URL(alternatePath(locale, page), SITE_URL).href
+const alternates = (['pt', 'en'] as const).map((l) => ({
+  hreflang: LOCALE_TAGS[l],
+  href: new URL(alternatePath(l, page), SITE_URL).href,
+}))
+const xDefault = new URL(alternatePath(DEFAULT_LOCALE, page), SITE_URL).href
+const ogImage = new URL('/og.png', SITE_URL).href
+---
+
+<!doctype html>
+<html lang={LOCALE_TAGS[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={PERSON.name} />
+    <meta property="og:locale" content={locale === 'pt' ? 'pt_BR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={otherLocale(locale) === 'pt' ? 'pt_BR' : 'en_US'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <meta name="theme-color" content="#08100f" />
+
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    {jsonLd.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+
+    {/* Resolve the theme before first paint: device preference first, stored choice wins after. */}
+    <script is:inline>
+      (function () {
+        try {
+          var stored = document.cookie.match(/(?:^|; )theme=(light|dark)/)
+          if (stored) {
+            document.documentElement.dataset.theme = stored[1]
+            return
+          }
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
+          document.documentElement.dataset.theme = prefersLight ? 'light' : 'dark'
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark'
+        }
+      })()
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">{t('nav.skipToContent')}</a>
+    <AppBackground />
+    <Cursor client:idle />
+    <SiteHeader locale={locale} page={page} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+
+    <Analytics />
+    <SpeedInsights />
+
+    <style>
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        z-index: 100;
+        background: var(--color-accent);
+        color: var(--color-accent-ink);
+        padding: 0.75rem 1.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+      }
+      .skip:focus {
+        left: 0;
+      }
+    </style>
+  </body>
+</html>

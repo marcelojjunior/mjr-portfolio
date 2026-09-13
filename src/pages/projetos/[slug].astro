@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import CaseView from '@/components/CaseView.astro'
+import { getCases, slugOf } from '@/lib/projects'
+import { caseSchema, personSchema } from '@/lib/jsonld'
+import { projectPath } from '@/lib/i18n'
+
+export async function getStaticPaths() {
+  const cases = await getCases('pt')
+  return cases.map((entry) => ({ params: { slug: slugOf(entry) }, props: { entry } }))
+}
+
+const locale = 'pt' as const
+const { entry } = Astro.props
+const slug = slugOf(entry)
+const { title, summary, stack, period } = entry.data
+---
+
+<BaseLayout
+  locale={locale}
+  page={{ kind: 'project', slug }}
+  title={`${title} — Marcelo Junior`}
+  description={summary}
+  jsonLd={[
+    personSchema(locale),
+    caseSchema({ locale, path: projectPath(locale, slug), title, summary, stack, period }),
+  ]}
+>
+  <CaseView entry={entry} locale={locale} />
+</BaseLayout>

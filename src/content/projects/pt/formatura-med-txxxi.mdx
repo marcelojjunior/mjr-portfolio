@@ -1,0 +1,87 @@
+---
+title: Formatura Medicina TXXXI - UNICID
+summary: 'Central de informações da formatura de uma turma de medicina: quatro eventos, FAQ com busca, documentos e um formulário que cai no e-mail da comissão.'
+role: Desenvolvedor único
+period: Julho de 2026
+kind: Site de evento
+stack: [Astro, TypeScript, GSAP, Lenis, Resend, 'Cloudflare Turnstile', 'Cloudflare R2', Vercel]
+tags: [Astro, TypeScript, Resend, 'Cloudflare R2', Vercel]
+preview: frames
+cover: ./../../../assets/projects/formatura-med-txxxi/hero-contagem.png
+images:
+  - src: ./../../../assets/projects/formatura-med-txxxi/hero-contagem.png
+    alt: Página inicial com a foto da turma de medicina formada na escadaria do prédio da universidade, a frase "Uma jornada chega ao fim e outra começa agora" e um contador regressivo em dias, horas, minutos e segundos
+  - src: ./../../../assets/projects/formatura-med-txxxi/central-eventos.png
+    alt: Seção "Os eventos" com quatro cartões, Culto Ecumênico, Jantar de Gala, Baile de Formatura e Colação de Grau, cada um com data, horário, local e link para detalhes
+  - src: ./../../../assets/projects/formatura-med-txxxi/evento-culto.png
+    alt: Página do Culto Ecumênico com índice lateral, tabela de informações gerais com data, horário, local, endereço, horário de chegada e estacionamento, e um mapa do Google abaixo
+  - src: ./../../../assets/projects/formatura-med-txxxi/faq-busca.png
+    alt: Página de FAQ com campo de busca e perguntas agrupadas por evento, cada grupo com um índice lateral e as perguntas em acordeão
+video: /projects/formatura-med-txxxi/walkthrough.mp4
+links:
+  live: https://formaturamed31.com.br/
+---
+
+## Visão geral
+
+Uma turma de medicina de 140 formandos se forma no fim de 2026. A comissão de formatura tocava tudo
+por um grupo de WhatsApp com formandos e aderidos, e o grupo virou o único canal de informação:
+horário do jantar, dress code do baile, prazo de formulário. As mesmas perguntas voltavam toda
+semana, porque procurar uma resposta antiga no meio de centenas de mensagens dá mais trabalho que
+perguntar de novo.
+
+O site tira essa informação da conversa e põe num endereço fixo. Ele reúne os quatro eventos da
+formatura, um FAQ com busca, o portal dos aderidos, os boletins e documentos da comissão, os
+contatos das empresas envolvidas e um formulário de dúvidas. A raiz é só uma abertura animada com
+contagem regressiva. Tudo que é informação mora dentro de `/informacoes`.
+
+## Decisões técnicas
+
+### Quatro eventos, quatro arquivos de conteúdo
+
+Cada evento é um arquivo YAML validado por schema, renderizado por uma rota dinâmica. O arquivo
+declara as próprias seções numa união discriminada por tipo: informações gerais, traje, cronograma,
+cardápio, permissões, lista, links, texto e FAQ. Um renderizador escolhe o componente de cada tipo.
+
+Escolhi Astro por causa disso. A informação chegava aos pedaços e fora de ordem, então eu precisava
+mudar conteúdo sem abrir componente, e reordenar uma seção sem mexer em layout. Os boletins e
+documentos ficam no Cloudflare R2, atrás de um subdomínio próprio, então publicar um boletim novo é
+upload e um link no YAML.
+
+> **O que isso custou:** enquanto a informação nova couber num tipo de seção que já existe, é um
+> bloco de YAML. Quando não cabe, é schema novo, componente novo e um caso novo no renderizador.
+
+### Estático inteiro, com uma exceção
+
+O site é pré-renderizado por completo, com uma rota de fora: a que recebe o formulário de dúvidas.
+Ela roda no servidor, valida um token do Cloudflare Turnstile antes de qualquer outra coisa e envia
+o e-mail pela Resend, a partir do domínio da própria formatura. As duas chaves entram no schema de
+env do Astro, então uma chave faltando quebra o build, e não o formulário do primeiro formando que
+tentar usar.
+
+> **O que isso custou:** o projeto deixou de rodar como site puramente estático e passou a depender
+> de um adapter e de duas contas externas. Em troca, a comissão recebe as dúvidas no e-mail dela sem
+> painel nenhum para aprender, e um bot não consegue inundar essa caixa.
+
+### A animação roda por cima de uma página que já está pronta
+
+A raiz do site abre com o brasão da turma, a frase e a contagem regressiva, animados com GSAP e
+split-type, e o scroll suave fica por conta do Lenis. O HTML sai do servidor já no estado final: o
+script só define os pontos de partida e anima até onde a página já estava. A tela de abertura se
+apaga sozinha por CSS, com animação própria, então um script que não carrega não deixa ninguém
+preso atrás dela. Em `prefers-reduced-motion` essa tela nem aparece.
+
+> **O que isso custou:** GSAP, split-type e Lenis somam JavaScript justamente na primeira página que
+> alguém abre, e o Lenis ainda troca o scroll que o navegador entrega de graça por um que ele
+> controla. Aceitei o custo porque a raiz existe para dar um momento ao formando: o brasão da turma,
+> a frase e quanto falta para a cerimônia. Nas páginas de consulta, que é onde a informação mora,
+> nenhuma das três carrega.
+
+## Resultados e aprendizados
+
+Os quatro eventos, o FAQ e o portal dos aderidos saíram dos mesmos tipos de seção, e publicar
+material novo passou a ser editar YAML e subir um arquivo no R2.
+
+O formulário de dúvidas envia pela Resend com o domínio da formatura verificado, e sai de um
+endereço da própria formatura. É o que mantém a mensagem fora da caixa de spam da comissão, coisa
+que um remetente genérico não garante.

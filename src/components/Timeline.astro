@@ -1,0 +1,169 @@
+---
+import type { Locale } from '@/config/site'
+import { EXPERIENCE } from '@/config/experience'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+---
+
+<div class="tl" data-timeline>
+  <span class="tl__rail" aria-hidden="true"></span>
+  <span class="tl__fill" data-fill aria-hidden="true"></span>
+
+  <ol class="tl__list">
+    {EXPERIENCE.map((item) => (
+      <li class="tl__item" data-item>
+        <span class="tl__dot" aria-hidden="true"></span>
+
+        <p class="tl__when">{item.period[locale]}</p>
+
+        <h3 class="tl__role">
+          {item.role[locale]} <span class="tl__at">·</span> <b>{item.company}</b>
+        </h3>
+
+        <p class="tl__meta">
+          <span>{item.workModel[locale]}</span>
+          <span aria-hidden="true">·</span>
+          <span>{item.location[locale]}</span>
+        </p>
+
+        <ul class="tl__bullets">
+          {item.bullets[locale].map((line) => <li>{line}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .tl { position: relative; }
+  .tl__list { list-style: none; margin: 0; padding: 0; }
+
+  .tl__rail,
+  .tl__fill {
+    position: absolute;
+    left: 0.4375rem;
+    width: 2px;
+  }
+  .tl__rail {
+    top: 0.375rem;
+    bottom: 0.375rem;
+    background: var(--color-line);
+  }
+  .tl__fill {
+    top: 0.375rem;
+    height: 0;
+    background: var(--color-accent);
+  }
+
+  .tl__item {
+    position: relative;
+    padding: 0 0 2.75rem 2.125rem;
+  }
+  .tl__item:last-child { padding-bottom: 0; }
+
+  .tl__dot {
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-line);
+    background: var(--color-ground);
+    transition:
+      border-color var(--dur-base) var(--ease-out),
+      background var(--dur-base),
+      transform var(--dur-base) var(--ease-out);
+  }
+  .tl__item[data-lit] .tl__dot {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    transform: scale(1.12);
+  }
+
+  .tl__when {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--color-dim);
+    margin: 0;
+  }
+  .tl__role {
+    font-size: 1.35rem;
+    margin-top: 0.35rem;
+  }
+  .tl__at {
+    color: var(--color-dim);
+    /* Em-based so the gap tracks the heading size at every breakpoint. */
+    margin-inline: 0.3em;
+  }
+  .tl__role b { color: var(--color-accent); font-weight: inherit; }
+
+  .tl__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-dim);
+    margin: 0.45rem 0 0;
+  }
+
+  .tl__bullets {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    max-width: 62ch;
+  }
+  .tl__bullets li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: var(--color-dim);
+  }
+  .tl__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 5px;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl__fill { height: 100% !important; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-timeline]')
+  const fill = root?.querySelector<HTMLElement>('[data-fill]')
+  const items = root ? Array.from(root.querySelectorAll<HTMLElement>('[data-item]')) : []
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (root && fill && !still) {
+    const update = () => {
+      const box = root.getBoundingClientRect()
+      const progress = Math.max(0, Math.min(1, (window.innerHeight * 0.72 - box.top) / box.height))
+      fill.style.height = `${progress * box.height}px`
+
+      for (const item of items) {
+        const lit = item.getBoundingClientRect().top < window.innerHeight * 0.74
+        item.toggleAttribute('data-lit', lit)
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    update()
+  }
+</script>

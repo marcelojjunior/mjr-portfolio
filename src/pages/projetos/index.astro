@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import CaseCard from '@/components/CaseCard.astro'
+import { getCases } from '@/lib/projects'
+import { useTranslations } from '@/i18n/ui'
+
+const locale = 'pt' as const
+const t = useTranslations(locale)
+const cases = await getCases(locale)
+---
+
+<BaseLayout
+  locale={locale}
+  page={{ kind: 'projects' }}
+  title="Projetos — Marcelo Junior"
+  description="Seis projetos, cada um com a decisão técnica que o definiu e o que ela custou."
+>
+  <section class="listing">
+    <p class="eyebrow">{t('work.eyebrow')}</p>
+    <h1>{t('work.listTitle')}</h1>
+    <div class="grid">
+      {cases.map((entry) => <CaseCard entry={entry} locale={locale} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .listing {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+  }
+  .listing h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    margin-top: 0.5rem;
+  }
+  .grid {
+    display: grid;
+    gap: 1.125rem;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 760px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

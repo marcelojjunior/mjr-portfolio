@@ -1,117 +1,35 @@
 # mjr-portfolio
 
-Personal portfolio built to showcase projects, professional experience, technical stack, and contact links in a polished bilingual interface.
+Personal portfolio of [Marcelo Junior](https://marcelojunior.dev) — full stack developer.
 
-The project was designed with a focus on performance, smooth interactions, and straightforward content management, using animated transitions, lazy-loaded sections, and a clean component structure.
+Statically rendered with Astro, bilingual (Portuguese at the root, English under `/en/`), with a
+dedicated case page per project.
 
-## Overview
-
-This portfolio includes:
-
-- hero section with personal intro and call-to-action buttons
-- projects section with cards, tech stack, and external links
-- professional experience section
-- stack section organized by category
-- direct contact section
-- support for `pt-BR` and `en`
-- smooth scrolling and animated section reveals
-
-## Tech Stack
-
-### Core
-
-- `React 19`
-- `TypeScript`
-- `Vite`
-
-### UI and experience
-
-- `Tailwind CSS v4`
-- `Framer Motion`
-- `Lenis`
-- `React Icons`
-- `@fontsource/jetbrains-mono`
-
-### State and utilities
-
-- `Zustand`
-- `clsx`
-
-### Analytics
-
-- `@vercel/analytics`
-
-## Project Structure
-
-```text
-src/
-  components/    Reusable UI components
-  constants/     Structured content and app constants
-  hooks/         Behavior, animation, translation, and navigation hooks
-  i18n/          Portuguese and English copy
-  layouts/       Main page layout
-  providers/     Global providers
-  sections/      Main portfolio sections
-  store/         Global state with Zustand
-  utils/         Helper functions
-public/
-  Public assets and static files
-```
-
-## Getting Started
-
-### Requirements
-
-- `Node.js` 18 or higher
-- `pnpm`
-
-If you use Corepack:
-
-```bash
-corepack enable
-```
-
-### Install dependencies
+## Commands
 
 ```bash
 pnpm install
+pnpm dev      # http://localhost:4321
+pnpm build    # type-checks, then builds to dist/
+pnpm preview  # serve the built site
 ```
 
-### Start development server
+## Structure
 
-```bash
-pnpm dev
+```
+src/
+├── config/      site constants, project order, experience
+├── content/     MDX cases and pages, one file per locale
+├── components/  Astro components; React only under islands/
+├── layouts/     BaseLayout — SEO, hreflang, JSON-LD, theme
+├── lib/         i18n paths, content queries, structured data
+├── pages/       thin route wrappers, mirrored per locale
+└── styles/      design tokens
 ```
 
-The app will run at `http://localhost:5173`.
+## Contributing to this repo (including with an AI agent)
 
-### Build for production
+Rules live in `CLAUDE.md` at the root and in `src/content/`, `src/components/` and `src/pages/`.
+Domain vocabulary is in `CONTEXT.md`; architectural decisions are in `docs/adr/`.
 
-```bash
-pnpm build
-```
-
-### Preview production build
-
-```bash
-pnpm preview
-```
-
-### Run lint
-
-```bash
-pnpm lint
-```
-
-## Available Scripts
-
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Starts the development server |
-| `pnpm build` | Generates the production build |
-| `pnpm preview` | Serves the production build locally |
-| `pnpm lint` | Runs lint checks |
-
-## License
-
-This project is maintained as a personal professional portfolio.
+All project artefacts are written in English. Portuguese appears only in visitor-facing content.

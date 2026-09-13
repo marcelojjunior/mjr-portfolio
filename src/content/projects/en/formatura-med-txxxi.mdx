@@ -1,0 +1,86 @@
+---
+title: Formatura Medicina TXXXI - UNICID
+summary: "The information hub for a medical class's graduation: four events, a searchable FAQ, documents, and a form that lands in the committee's inbox."
+role: Sole developer
+period: July 2026
+kind: Event site
+stack: [Astro, TypeScript, GSAP, Lenis, Resend, 'Cloudflare Turnstile', 'Cloudflare R2', Vercel]
+tags: [Astro, TypeScript, Resend, 'Cloudflare R2', Vercel]
+preview: frames
+cover: ./../../../assets/projects/formatura-med-txxxi/hero-contagem.png
+images:
+  - src: ./../../../assets/projects/formatura-med-txxxi/hero-contagem.png
+    alt: Home page showing the graduating medical class photographed on the university steps, the line "Uma jornada chega ao fim e outra começa agora", and a countdown in days, hours, minutes and seconds
+  - src: ./../../../assets/projects/formatura-med-txxxi/central-eventos.png
+    alt: An events section with four cards, the ecumenical service, gala dinner, graduation ball and degree ceremony, each showing date, time, venue and a link to details
+  - src: ./../../../assets/projects/formatura-med-txxxi/evento-culto.png
+    alt: Event page for the ecumenical service, with a sidebar index, a table of general information covering date, time, venue, address, arrival time and parking, and a Google map below
+  - src: ./../../../assets/projects/formatura-med-txxxi/faq-busca.png
+    alt: FAQ page with a search field and questions grouped by event, each group listed in a sidebar with the questions as accordions
+video: /projects/formatura-med-txxxi/walkthrough.mp4
+links:
+  live: https://formaturamed31.com.br/
+---
+
+## Overview
+
+A medical class of 140 graduates finishes at the end of 2026. The graduation committee ran everything
+through a WhatsApp group with the graduates and their guests, and that group became the only source
+of information: dinner times, dress code for the ball, form deadlines. The same questions came back
+every week, because digging an old answer out of hundreds of messages takes more effort than asking
+again.
+
+The site takes that information out of the conversation and gives it a fixed address. It holds the four graduation
+events, a searchable FAQ, the guests' portal, the committee's newsletters and documents, contacts
+for the companies involved, and a question form. The root is an animated opening with a countdown.
+Everything that counts as information lives under `/informacoes`.
+
+## Technical decisions
+
+### Four events, four content files
+
+Each event is a YAML file validated by a schema and rendered by one dynamic route. The file declares
+its own sections as a discriminated union: general information, dress code, schedule, menu,
+permissions, list, links, text and FAQ. A renderer picks the component for each type.
+
+That is why I chose Astro. The information arrived in pieces and out of order, so I needed to change
+content without opening a component, and reorder a section without touching layout. The newsletters
+and documents sit in Cloudflare R2 behind their own subdomain, so publishing a new one is an upload
+and a link in the YAML.
+
+> **What it cost:** as long as new information fits a section type that already exists, it is a
+> block of YAML. When it doesn't, it is a new schema entry, a new component and a new case in the
+> renderer.
+
+### Static throughout, with one exception
+
+The site is fully prerendered except for one route, the one that receives the question form. It runs
+on the server, checks a Cloudflare Turnstile token before anything else, and sends the email through
+Resend from the graduation's own domain. Both keys are declared in Astro's env schema, so a missing
+key breaks the build instead of the form of the first graduate who tries to use it.
+
+> **What it cost:** the project stopped running as a purely static site and picked up an adapter and
+> two external accounts. In exchange, the committee gets the questions in its own inbox with no
+> dashboard to learn, and a bot cannot flood it.
+
+### The animation runs on top of a page that is already finished
+
+The root opens with the class crest, the line and the countdown, animated with GSAP and split-type,
+with Lenis handling smooth scrolling. The HTML leaves the server in its final state: the script only
+sets the starting points and animates up to where the page already was. The opening screen clears
+itself through a CSS animation, so a script that fails to load leaves nobody stuck behind it. Under
+`prefers-reduced-motion` that screen never appears at all.
+
+> **What it cost:** GSAP, split-type and Lenis add JavaScript to the first page anyone opens, and
+> Lenis swaps the scrolling the browser gives for free for one it controls itself. I took the cost
+> because the root exists to give the graduate a moment: the class crest, the line, and how long is
+> left until the ceremony. None of the three loads on the pages people actually consult.
+
+## Results and lessons
+
+The four events, the FAQ and the guests' portal all came out of the same section types, and
+publishing new material became editing YAML and uploading a file to R2.
+
+The question form sends through Resend with the graduation's domain verified, from an address on
+that domain. That is what keeps the message out of the committee's spam folder, which a generic
+sender does not guarantee.

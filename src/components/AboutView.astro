@@ -1,0 +1,228 @@
+---
+import { Image } from 'astro:assets'
+import { render, type CollectionEntry } from 'astro:content'
+import portrait from '@/assets/portrait.jpeg'
+import { PERSON, JOB_TITLE, type Locale } from '@/config/site'
+import { EXPERIENCE } from '@/config/experience'
+import { STACK } from '@/config/stack'
+import { iconPath } from '@/lib/icons'
+import { useTranslations } from '@/i18n/ui'
+import { projectsPath } from '@/lib/i18n'
+
+interface Props {
+  entry: CollectionEntry<'pages'>
+  locale: Locale
+}
+
+const { entry, locale } = Astro.props
+const t = useTranslations(locale)
+const { Content } = await render(entry)
+
+const current = EXPERIENCE[0]!
+const tools = STACK.map((tech) => ({ ...tech, path: iconPath(tech.icon) }))
+
+const facts = [
+  { label: t('about.now'), value: `${current.role[locale]} · ${current.company}` },
+  { label: t('about.based'), value: `${PERSON.location.city}, Brasil` },
+  { label: t('about.languages'), value: t('about.languagesValue') },
+]
+---
+
+<article class="about">
+  <header class="about__head">
+    <p class="eyebrow">{t('about.eyebrow')}</p>
+    <h1>{PERSON.name}</h1>
+    <p class="about__role">{JOB_TITLE[locale]}</p>
+  </header>
+
+  <div class="about__grid">
+    <div class="about__prose">
+      <Content />
+    </div>
+
+    <aside class="about__side">
+      <figure class="portrait">
+        <Image src={portrait} alt={t('about.portraitAlt')} widths={[320, 640]} sizes="(min-width: 900px) 17rem, 100vw" />
+      </figure>
+
+      <dl class="facts">
+        {facts.map((fact) => (
+          <div>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
+  </div>
+
+  <section class="tools">
+    <h2>{t('about.toolsTitle')}</h2>
+    <ul>
+      {tools.map((tech) => (
+        <li>
+          {tech.path && (
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+              <path d={tech.path} />
+            </svg>
+          )}
+          {tech.label}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="next">
+    <div>
+      <h2>{t('about.workTitle')}</h2>
+      <p>{t('work.title')}</p>
+    </div>
+    <a class="next__cta" href={projectsPath(locale)}>
+      {t('about.workCta')} <span aria-hidden="true">→</span>
+    </a>
+  </section>
+</article>
+
+<style>
+  .about {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: clamp(2rem, 6vw, 4rem) var(--gutter) 0;
+  }
+
+  .about__head h1 {
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    margin-top: 0.5rem;
+  }
+  .about__role {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0.9rem 0 0;
+  }
+
+  .about__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .about__grid > * {
+    min-width: 0;
+  }
+  @media (min-width: 900px) {
+    .about__grid { grid-template-columns: minmax(0, 1fr) 17rem; align-items: start; }
+  }
+
+  .about__prose {
+    font-size: 1.06rem;
+    line-height: 1.75;
+    max-width: 62ch;
+  }
+  .about__prose :global(p) { margin: 0 0 1.25em; }
+  .about__prose :global(p:first-child) {
+    font-size: 1.28rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+  .about__prose :global(strong) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .about__side {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .portrait {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-sunken);
+  }
+  .portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 32%;
+    display: block;
+  }
+
+  .facts { margin: 0; display: grid; gap: 1rem; }
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .facts dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  .tools { margin-top: clamp(3rem, 7vw, 5rem); }
+  .tools h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 1.25rem;
+  }
+  .tools ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tools li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    color: var(--color-dim);
+  }
+  .tools svg { color: var(--color-accent); }
+
+  .next {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: var(--color-sunken);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .next h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); }
+  .next p { color: var(--color-dim); margin: 0.6rem 0 0; max-width: 46ch; }
+  .next__cta {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    white-space: nowrap;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .next__cta:hover { transform: translateY(-2px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .next__cta:hover { transform: none; }
+  }
+</style>

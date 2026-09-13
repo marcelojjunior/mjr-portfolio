@@ -1,0 +1,86 @@
+---
+import { STACK } from '@/config/stack'
+import { iconPath } from '@/lib/icons'
+
+const items = STACK.map((tech) => ({ ...tech, path: iconPath(tech.icon) }))
+
+/**
+ * Four identical groups slide by exactly one group's width, so the loop is seamless
+ * at any viewport — including monitors wider than a single pass of the list.
+ */
+const GROUPS = [0, 1, 2, 3]
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {GROUPS.map(() => (
+      <ul class="marquee__group">
+        {items.map((tech) => (
+          <li>
+            {tech.path && (
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" role="presentation">
+                <path d={tech.path} />
+              </svg>
+            )}
+            <span>{tech.label}</span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    border-block: 1px solid var(--color-line);
+    overflow: hidden;
+    /* Fade the ends so the loop never reads as a hard cut. */
+    mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+
+  .marquee__group {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    flex: none;
+    margin: 0;
+    padding: 0.875rem 1.125rem 0.875rem 0;
+    list-style: none;
+  }
+
+  .marquee__group li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-dim);
+    white-space: nowrap;
+  }
+
+  .marquee__group svg {
+    flex: none;
+    opacity: 0.85;
+    color: var(--color-accent);
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-25%);
+    }
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+  }
+</style>

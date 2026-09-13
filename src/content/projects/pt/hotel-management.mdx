@@ -1,0 +1,47 @@
+---
+title: Hotel Management
+summary: SaaS multi-tenant para uma rede de pousadas — API em Laravel e painel em Next.js, feito sozinho.
+role: Desenvolvedor único
+period: '2026'
+kind: SaaS multi-tenant
+stack: [Laravel, 'PHP 8', PostgreSQL, 'Next.js', TypeScript, Tailwind CSS]
+tags: [Laravel, PostgreSQL, Multi-tenant]
+preview: frames
+links: {}
+---
+
+## Visão geral
+
+> **Rascunho não confirmado.** As duas decisões abaixo fui eu que escrevi a partir da descrição do
+> repositório, antes de você me passar os fatos. Confirme, corrija ou troque.
+
+Uma rede de pousadas gerenciava reservas em planilhas compartilhadas. Cada unidade tinha a sua, com
+regras próprias de tarifa, e ninguém conseguia responder uma pergunta simples: quantos quartos estão
+livres na semana que vem, em todas as unidades.
+
+Construí a plataforma inteira, API em Laravel e painel em Next.js. O requisito que definiu a
+arquitetura foi multi-tenant: cada pousada precisava dos próprios dados, dos próprios usuários e das
+próprias tarifas, sem virar seis instalações separadas para manter.
+
+## Decisões técnicas
+
+### Um banco só, isolamento por tenant na camada de query
+
+Em vez de um banco por pousada, usei um schema único com `tenant_id` em toda tabela e um global
+scope no Eloquent que nunca deixa uma query escapar do tenant atual.
+
+> **O que isso custou:** um bug no scope vaza dado entre clientes, risco que banco separado não
+> teria. Aceitei porque migration em seis bancos a cada release seria o problema de todo dia, e
+> vazamento é um problema que teste cobre.
+
+### Disponibilidade calculada no banco
+
+A busca por quartos livres virou uma query com range de datas em PostgreSQL, em vez de carregar
+todas as reservas e cruzar em PHP.
+
+> **O que isso custou:** a regra de negócio mais importante do sistema mora em SQL, fora do alcance
+> de unit test. Em troca, a busca responde em tempo constante conforme a rede cresce.
+
+## Resultados e aprendizados
+
+O que mudou por causa do projeto, e o que você faria diferente hoje.
