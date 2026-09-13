@@ -32,21 +32,20 @@ again.
 
 The site takes that information out of the conversation and gives it a fixed address. It holds the four graduation
 events, a searchable FAQ, the guests' portal, the committee's newsletters and documents, contacts
-for the companies involved, and a question form. The root is an animated opening with a countdown.
-Everything that counts as information lives under `/informacoes`.
+for the companies involved, and a question form.
 
 ## Technical decisions
 
 ### Four events, four content files
 
+The information arrived in pieces and out of order, so I needed to change content without opening a
+component, and reorder a section without touching layout. That is why I chose Astro.
+
 Each event is a YAML file validated by a schema and rendered by one dynamic route. The file declares
 its own sections as a discriminated union: general information, dress code, schedule, menu,
-permissions, list, links, text and FAQ. A renderer picks the component for each type.
-
-That is why I chose Astro. The information arrived in pieces and out of order, so I needed to change
-content without opening a component, and reorder a section without touching layout. The newsletters
-and documents sit in Cloudflare R2 behind their own subdomain, so publishing a new one is an upload
-and a link in the YAML.
+permissions, list, links, text and FAQ. A renderer picks the component for each type. The
+newsletters and documents sit in Cloudflare R2 behind their own subdomain, so publishing a new one is
+an upload and a link in the YAML.
 
 > **What it cost:** as long as new information fits a section type that already exists, it is a
 > block of YAML. When it doesn't, it is a new schema entry, a new component and a new case in the
@@ -61,7 +60,7 @@ key breaks the build instead of the form of the first graduate who tries to use 
 
 > **What it cost:** the project stopped running as a purely static site and picked up an adapter and
 > two external accounts. In exchange, the committee gets the questions in its own inbox with no
-> dashboard to learn, and a bot cannot flood it.
+> dashboard to learn, and it is much harder for a bot to flood it.
 
 ### The animation runs on top of a page that is already finished
 
