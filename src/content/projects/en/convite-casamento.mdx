@@ -1,0 +1,67 @@
+---
+title: Wedding Invitation - Marília & Davy
+summary: 'A wedding invitation built as a website, with a travel theme: date and venue, RSVP, gift list, PIX and the colours guests should avoid.'
+role: Sole developer
+period: June 2026
+kind: Landing page
+stack: [React, JavaScript, Vite, Tailwind CSS, Framer Motion, GSAP, Lenis, Vercel]
+tags: [React, Vite, Tailwind CSS, GSAP, Framer Motion]
+preview: frames
+cover: ./../../../assets/projects/convite-casamento/capa.png
+images:
+  - src: ./../../../assets/projects/convite-casamento/capa.png
+    alt: Invitation cover with a photo of the couple on an airport runway, the label "Passaporte", a monogram with a plane, the names Marília and Davy, the date 18.10.2026 and the "Abrir convite" button
+  - src: ./../../../assets/projects/convite-casamento/hero.png
+    alt: Top of the invitation with the headline "Toda viagem tem um destino. A nossa sempre foi um ao outro.", a boarding pass from Balsas with the date, the "Fazer check-in" button and a world map with a heart-shaped flight route
+  - src: ./../../../assets/projects/convite-casamento/historia.png
+    alt: The couple's story section with a verse from Ruth 1:16, three paragraphs about their long-distance relationship and a flight line joining two hearts
+  - src: ./../../../assets/projects/convite-casamento/dress-code.png
+    alt: Dress code section on a dark background with the headline "Traje social elegante." and four colours guests should avoid, butter yellow, green, light blue and navy
+links:
+  live: https://marilia-e-davy.vercel.app/
+  repo: https://github.com/marcelojjunior/wedding-invitation-lp
+---
+
+## Overview
+
+I built this invitation for the wedding of Marília and Davy, who are friends and family. Instead of
+a printed card, guests get a link with everything they need: the date, time and venue, the dress
+code, the colours to avoid, the RSVP, the gift list and the PIX key.
+
+The theme is a journey, because the couple's story began long-distance. The invitation opens with a
+passport cover, the top shows a boarding pass and a plane flying across a map, and the RSVP becomes a
+check-in.
+
+## Technical decisions
+
+### All of the invitation's text lives in one file
+
+Names, date, venue, section copy, links and dress-code colours sit in a JSON file, and the components
+only read from it. Changing the ceremony time or the PIX key means changing a value, without
+touching a component.
+
+> **What it cost:** there is no panel for the couple to edit anything. Every change goes through me,
+> as an edit to the file and a new deploy.
+
+### Links become QR codes
+
+The RSVP, the gift list and PIX appear as cards with a QR code. Someone opening the invitation on a
+computer points their phone at the screen and goes straight to the link. The PIX key has a button
+that copies it in one tap.
+
+> **What it cost:** the RSVP and gift list codes are generated from their links, but the PIX code is
+> an image. If the key changes, the image has to be replaced by hand.
+
+### The motion respects people who prefer less of it
+
+The cover slides away to reveal the invitation, the plane loops around the map and scrolling is
+smoothed. When the device is set to reduce motion, the cover is skipped, the plane stays still on
+the map and scrolling goes back to native.
+
+> **What it cost:** every animation needed a second, still version. People who reduce motion also
+> miss the passport cover, which is how the theme opens.
+
+## Results and lessons
+
+The invitation is live and puts the wedding details, the RSVP, the gift list and PIX behind a single
+link.

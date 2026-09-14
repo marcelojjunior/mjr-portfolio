@@ -1,0 +1,68 @@
+---
+title: Convite de Casamento - Marília & Davy
+summary: 'Convite de casamento em forma de site, com tema de viagem: data e local, confirmação de presença, lista de presentes, PIX e as cores que os convidados devem evitar.'
+role: Desenvolvedor único
+period: Junho de 2026
+kind: Landing page
+stack: [React, JavaScript, Vite, Tailwind CSS, Framer Motion, GSAP, Lenis, Vercel]
+tags: [React, Vite, Tailwind CSS, GSAP, Framer Motion]
+preview: frames
+cover: ./../../../assets/projects/convite-casamento/capa.png
+images:
+  - src: ./../../../assets/projects/convite-casamento/capa.png
+    alt: Capa do convite com a foto do casal numa pista de aeroporto, o rótulo "Passaporte", o monograma com um avião, os nomes Marília e Davy, a data 18.10.2026 e o botão "Abrir convite"
+  - src: ./../../../assets/projects/convite-casamento/hero.png
+    alt: Topo do convite com o título "Toda viagem tem um destino. A nossa sempre foi um ao outro.", um cartão de embarque de Balsas com a data, o botão "Fazer check-in" e um mapa-múndi com a rota de um avião em forma de coração
+  - src: ./../../../assets/projects/convite-casamento/historia.png
+    alt: Seção da história do casal com um versículo de Rute 1:16, três parágrafos sobre o relacionamento à distância e uma linha de voo ligando dois corações
+  - src: ./../../../assets/projects/convite-casamento/dress-code.png
+    alt: Seção de traje em fundo escuro com o título "Traje social elegante." e quatro cores que os convidados devem evitar, amarelo manteiga, verde, azul claro e azul marinho
+links:
+  live: https://marilia-e-davy.vercel.app/
+  repo: https://github.com/marcelojjunior/wedding-invitation-lp
+---
+
+## Visão geral
+
+Fiz este convite para o casamento de Marília e Davy, que são amigos e família. Em vez de um convite
+impresso, os convidados recebem um link com tudo o que precisam saber: data, horário e local da
+cerimônia, o traje, as cores que devem evitar, a confirmação de presença, a lista de presentes e a
+chave PIX.
+
+O tema é uma viagem, porque a história do casal começou à distância. O convite abre com uma capa de
+passaporte, o topo mostra um cartão de embarque e um avião percorrendo um mapa, e a confirmação de
+presença vira um check-in.
+
+## Decisões técnicas
+
+### Todo o texto do convite fica num único arquivo
+
+Nomes, data, local, textos das seções, links e cores do traje ficam num arquivo JSON, e os
+componentes só leem esse arquivo. Mudar o horário da cerimônia ou a chave PIX é trocar um valor, sem
+mexer em nenhum componente.
+
+> **O que isso custou:** não existe painel para o casal editar. Qualquer mudança passa por mim, com
+> uma alteração no arquivo e um novo deploy.
+
+### Os links viram QR codes
+
+Confirmação de presença, lista de presentes e PIX aparecem como cartões com QR code. Quem abre o
+convite no computador aponta o celular para a tela e segue direto para o link. A chave PIX tem um
+botão que copia a chave com um toque.
+
+> **O que isso custou:** os QR codes da confirmação e da lista são gerados a partir do link, mas o do
+> PIX é uma imagem. Se a chave mudar, a imagem precisa ser trocada à mão.
+
+### A animação respeita quem prefere menos movimento
+
+A capa desliza para revelar o convite, o avião dá voltas no mapa e a rolagem é suavizada. Quando o
+aparelho está configurado para reduzir movimento, a capa não aparece, o avião fica parado no mapa e
+a rolagem volta a ser a nativa.
+
+> **O que isso custou:** cada animação precisou de uma segunda versão parada. Quem reduz movimento
+> também não vê a capa de passaporte, que é a abertura do tema.
+
+## Resultados e aprendizados
+
+O convite está publicado e reúne num só link as informações do casamento, a confirmação de presença,
+a lista de presentes e o PIX.
