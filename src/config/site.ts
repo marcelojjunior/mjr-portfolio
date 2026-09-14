@@ -62,11 +62,12 @@ export const yearsOfExperience = (now = new Date()) => now.getFullYear() - PROFI
 
 /**
  * Display order on the home grid. Single source of truth: a Project not listed here is
- * not rendered, even if its MDX exists. hotel-management, mb-gestor and
- * feira-de-talentos are drafts awaiting review and stay out until they are rewritten.
+ * not rendered, even if its MDX exists. hotel-management and mb-gestor are drafts awaiting
+ * review and stay out until they are rewritten.
  */
 export const PROJECT_ORDER = [
   'formatura-med-txxxi',
   'vm-fight',
   'weather-app',
+  'feira-de-talentos',
 ] as const

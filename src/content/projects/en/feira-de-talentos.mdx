@@ -1,28 +1,68 @@
 ---
-title: Talent Fair
-summary: Live scoring for a school talent fair, with a leaderboard everyone follows at once.
+title: Feira de Talentos - Pontuação
+summary: 'A web scoring system for the Talent Fair: administrators set the criteria, teachers mark students’ points throughout the year, and everyone follows progress in charts.'
 role: Sole developer
-period: '2026'
-kind: Real-time scoring
-stack: [React, TypeScript, Firebase, Recharts]
-tags: [React, Firebase, 'Real-time']
+period: March 2026
+kind: Web system
+stack: [React, TypeScript, Vite, 'Firebase Auth', Firestore, 'shadcn/ui', Tailwind CSS, Recharts, 'React Router', Vercel]
+tags: [React, TypeScript, Firebase, Recharts, 'shadcn/ui']
 preview: frames
+cover: ./../../../assets/projects/feira-de-talentos/dashboard-professor.png
+images:
+  - src: ./../../../assets/projects/feira-de-talentos/dashboard-professor.png
+    alt: Teacher dashboard with the number of students, the class average and total points, the top student, a chart of the class's progress over the year and the average points per month
+  - src: ./../../../assets/projects/feira-de-talentos/tabela-pontuacao.png
+    alt: A student's scoring table, with criteria in rows, months in columns and marked days in blue, noting that every click is saved automatically
+  - src: ./../../../assets/projects/feira-de-talentos/evolucao-aluno.png
+    alt: A student's score progress, with a chart of points per month and the running total, and a monthly summary with points, number of marks and running total
+  - src: ./../../../assets/projects/feira-de-talentos/dashboard-admin.png
+    alt: Administrator dashboard with the number of teachers and students, students per teacher, a chart of distribution by class and the list of teachers and classes
 links: {}
 ---
 
 ## Overview
 
-A talent fair with several judges and many performances needed a scoreboard that updated for
-everyone at the same time, with nobody adding up scores on paper at the end.
+The Talent Fair is a church project, and I built this system as a volunteer. It tracks students'
+participation throughout the year, and each kind of participation is worth points. The system organises that scoring by class: the administrator creates the classes
+and criteria and invites the teachers, and each teacher registers their students and marks their
+points week by week.
+
+Every role has its own dashboard. Teachers see their class's and each student's progress in charts,
+the administrator follows teachers and students across every class, and the evaluator scores the
+teachers.
 
 ## Technical decisions
 
-### Decision to fill in
+### Scoring is a mark per day
 
-Describe the technical choice and why this project needed it.
+Each criterion has a point value and a weekday on which it is filled in: Saturday, Wednesday or
+Sunday. The scoring screen shows only those days across the year, and the teacher marks the days a
+student met the criterion. Every click is saved immediately. Totals, monthly averages and the year's
+running total are all calculated from those marks.
 
-> **What it cost:** the trade-off you accepted, in one sentence.
+> **What it cost:** no total is stored in the database. The numbers are recalculated every time a
+> dashboard opens, and the administrator dashboard has to read every student's scores to draw its
+> charts.
+
+### Invite-only sign-up, with a username instead of an e-mail
+
+Nobody creates an account on their own. The administrator invites a teacher by username and assigns
+their class, and sign-up is only accepted for an invited username. Login uses a username and a
+password: since Firebase Authentication requires an e-mail, the system derives an internal e-mail
+from the username.
+
+> **What it cost:** without a real e-mail there is no password reset by e-mail. When someone forgets
+> their password, it goes through the administrator.
+
+### Students and teachers share one scoring table
+
+The evaluator scores teachers with the same model used for students: criteria with a value, fill-in
+days and marks saved per year. The screen, the monthly calculation and the charts serve both.
+
+> **What it cost:** both kinds of scoring are tied to the same format. A change to how students are
+> scored also reaches the teachers' evaluation.
 
 ## Results and lessons
 
-What changed because the project exists, and what you would do differently today.
+The system is in use at the church. Administrators can now follow both students' and teachers'
+scores in one place, and each teacher and evaluator works from their own dashboard.
