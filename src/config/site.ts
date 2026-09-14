@@ -68,6 +68,6 @@ export const yearsOfExperience = (now = new Date()) => now.getFullYear() - PROFI
 export const PROJECT_ORDER = [
   'formatura-med-txxxi',
   'vm-fight',
-  'weather-app',
   'feira-de-talentos',
+  'weather-app',
 ] as const
