@@ -33,12 +33,13 @@ export const PERSON = {
   linkedin: 'https://www.linkedin.com/in/marcelojjunior',
 } as const
 
-/** Display order on the home grid. Single source of truth. */
+/**
+ * Display order on the home grid. Single source of truth: a Project not listed here is
+ * not rendered, even if its MDX exists. hotel-management, mb-gestor and
+ * feira-de-talentos are drafts awaiting review and stay out until they are rewritten.
+ */
 export const PROJECT_ORDER = [
   'formatura-med-txxxi',
   'vm-fight',
-  'hotel-management',
-  'mb-gestor',
-  'feira-de-talentos',
   'weather-app',
 ] as const
