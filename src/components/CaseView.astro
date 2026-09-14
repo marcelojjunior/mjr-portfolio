@@ -127,6 +127,13 @@ const hasPlaceholder = outcomes.some((o) => o.placeholder)
 
   .prose { max-width: 66ch; line-height: 1.7; }
   .prose :global(p) { margin: 0 0 1.15em; }
+  .prose :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+  .prose :global(a:hover) { text-decoration-thickness: 2px; }
   .prose :global(h2) {
     font-size: 1.75rem;
     margin: 3rem 0 1rem;

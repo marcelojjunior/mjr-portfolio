@@ -1,29 +1,64 @@
 ---
 title: Weather App
-summary: App mobile de previsão do tempo — o projeto onde aprendi React Native de verdade.
+summary: 'App de previsão do tempo para iOS e Android, com busca de qualquer cidade do mundo, clima atual e previsão para os próximos dias.'
 role: Desenvolvedor único
-period: '2025'
+period: Agosto de 2025
 kind: App mobile
-stack: ['React Native', TypeScript, Expo, NativeWind]
-tags: ['React Native', Expo, TypeScript]
+stack: ['React Native', TypeScript, 'React Navigation', Axios, AsyncStorage, NetInfo, NativeWind]
+tags: ['React Native', TypeScript, NativeWind, Axios, AsyncStorage]
 preview: frames
+cover: ./../../../assets/projects/weather-app/clima-transparente.png
+images:
+  - src: ./../../../assets/projects/weather-app/clima-transparente.png
+    alt: Duas telas do app lado a lado. À esquerda, São Paulo de dia com céu azul, 14 graus e sol; à direita, Tokyo à noite com fundo escuro, 27 graus e parcialmente nublado, cada uma com vento, umidade, chance de chuva e a previsão dos próximos dias
+  - src: ./../../../assets/projects/weather-app/busca-transparente.png
+    alt: Três telas da seleção de cidade. A lista de cidades recentes com a opção de limpar, a busca mostrando sugestões enquanto a pessoa digita "Bu", e o aviso de que é preciso conexão com a internet para buscar
+  - src: ./../../../assets/projects/weather-app/telas-transparente.png
+    alt: Três telas do app lado a lado, com o clima atual de São Paulo, a busca de cidades com sugestões e o aviso de sem conexão com a internet
 links:
   repo: https://github.com/marcelojjunior/weather-app
 ---
 
 ## Visão geral
 
-Projeto de estudo, e digo isso sem rodeio: foi onde aprendi React Native, consumo de API com estado
-de carregamento e erro, e o que muda quando a tela é um celular na mão de alguém.
+O Weather App é um projeto de estudo que fiz para aprender React Native, inspirado no app Tempo
+que a Apple já traz no iPhone. É um aplicativo de
+previsão do tempo para iOS e Android: a pessoa busca qualquer cidade do mundo e vê a temperatura
+atual, a condição do tempo, vento, umidade, chance de chuva e a previsão para os próximos dias.
+
+Os dados vêm da <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">WeatherAPI</a>. As cidades buscadas ficam salvas no aparelho, e o app avisa quando
+não há conexão com a internet.
 
 ## Decisões técnicas
 
-### Decisão a preencher
+### O fundo muda com o tempo e com a hora do dia
 
-Descreva aqui a escolha técnica e por que ela foi necessária neste projeto.
+A tela principal troca a imagem de fundo conforme a condição e se é dia ou noite na cidade
+escolhida. Os códigos de condição da WeatherAPI ficam agrupados em chuva, nuvens e céu aberto, e
+cada grupo tem uma versão de dia e outra de noite.
 
-> **O que isso custou:** o trade-off que você aceitou, em uma frase.
+> **O que isso custou:** o agrupamento dos códigos foi escrito à mão. Uma condição que não esteja
+> em nenhum grupo cai no fundo padrão, então a lista precisa acompanhar os códigos que a API
+> devolve.
+
+### A busca espera a pessoa parar de digitar
+
+A busca de cidades só consulta a API meio segundo depois da última tecla. Sem essa espera, cada
+letra digitada viraria uma chamada. As cidades escolhidas entram numa lista de recentes, guardada
+no próprio aparelho, com até seis cidades e sem repetição.
+
+> **O que isso custou:** as sugestões aparecem com meio segundo de atraso depois que a pessoa para
+> de digitar. E as recentes ficam só naquele aparelho, sem sincronizar com outro.
+
+### Sem internet é um estado da tela
+
+O app acompanha a conexão o tempo todo. Quando ela cai, a tela de cidades mostra um aviso próprio
+dizendo que é preciso internet para buscar, em vez de uma mensagem de erro genérica.
+
+> **O que isso custou:** o app não guarda a última previsão consultada. Sem conexão, ele explica o
+> que aconteceu, mas não mostra o clima de nenhuma cidade.
 
 ## Resultados e aprendizados
 
-O que mudou por causa do projeto, e o que você faria diferente hoje.
+O mesmo código roda em iOS e Android, com a busca de cidades, as recentes salvas no aparelho e o
+tratamento de falta de conexão funcionando nas duas plataformas.
