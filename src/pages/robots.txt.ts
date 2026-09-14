@@ -7,6 +7,8 @@ export const GET: APIRoute = () =>
 Allow: /
 
 Sitemap: ${SITE_URL}/sitemap-index.xml
+
+# Plain-language brief for AI agents: ${SITE_URL}/llms.txt
 `,
     { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
   )

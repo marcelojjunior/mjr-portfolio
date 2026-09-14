@@ -41,6 +41,7 @@ const ogImage = new URL('/og.png', SITE_URL).href
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="describedby" type="text/markdown" href={new URL('/llms.txt', SITE_URL).href} />
 
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
     <link rel="alternate" hreflang="x-default" href={xDefault} />
