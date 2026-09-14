@@ -3,7 +3,7 @@ import { PERSON, JOB_TITLE, PROFILE, SITE_URL, PROJECT_ORDER, yearsOfExperience 
 import { EXPERIENCE } from '@/config/experience'
 import { SKILL_GROUPS } from '@/config/skills'
 import { getCases, slugOf } from '@/lib/projects'
-import { aboutPath, projectPath } from '@/lib/i18n'
+import { aboutPath, projectPath, projectsPath } from '@/lib/i18n'
 
 /**
  * A plain-text brief for language models: who this person is and what each Case contains,
@@ -23,7 +23,7 @@ export const GET: APIRoute = async () => {
     .map((c) =>
       [
         `### ${c.data.title}`,
-        `URL: ${abs(projectPath('en', slugOf(c)))}`,
+        `[Read the case study](${abs(projectPath('en', slugOf(c)))})`,
         `Role: ${c.data.role} · ${c.data.period} · ${c.data.kind}`,
         ...(c.data.company ? [`Built at ${c.data.company.name}; the project belongs to the company.`] : []),
         `Stack: ${c.data.stack.join(', ')}`,
@@ -46,11 +46,14 @@ export const GET: APIRoute = async () => {
 > ${JOB_TITLE.en} at ${current.company}, based in ${PERSON.location.city}, ${PROFILE.country.en}, and
 > originally from ${PROFILE.hometown}. ${yearsOfExperience()} years building systems, websites and apps.
 
-Site: ${SITE_URL} (Portuguese at the root, English under /en/)
-About: ${abs(aboutPath('en'))}
-Contact: ${PERSON.email}
-GitHub: ${PERSON.github}
-LinkedIn: ${PERSON.linkedin}
+## Links
+
+- [Website](${SITE_URL}): Portuguese at the root, English under /en/
+- [About](${abs(aboutPath('en'))}): profile, education and technical skills
+- [Projects](${abs(projectsPath('en'))}): every case study
+- [Email](mailto:${PERSON.email})
+- [GitHub](${PERSON.github})
+- [LinkedIn](${PERSON.linkedin})
 
 ## Profile
 
