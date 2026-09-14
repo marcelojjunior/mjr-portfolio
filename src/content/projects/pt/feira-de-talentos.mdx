@@ -1,0 +1,68 @@
+---
+title: Feira de Talentos - Pontuação
+summary: 'Sistema web de pontuação da Feira de Talentos: administradores configuram os critérios, professores marcam a pontuação dos alunos ao longo do ano e todos acompanham a evolução em gráficos.'
+role: Desenvolvedor único
+period: Março de 2026
+kind: Sistema web
+stack: [React, TypeScript, Vite, 'Firebase Auth', Firestore, 'shadcn/ui', Tailwind CSS, Recharts, 'React Router', Vercel]
+tags: [React, TypeScript, Firebase, Recharts, 'shadcn/ui']
+preview: frames
+cover: ./../../../assets/projects/feira-de-talentos/dashboard-professor.png
+images:
+  - src: ./../../../assets/projects/feira-de-talentos/dashboard-professor.png
+    alt: Painel do professor com total de alunos, média e total de pontos da turma, aluno em destaque, gráfico da evolução da turma no ano e a média de pontos por mês
+  - src: ./../../../assets/projects/feira-de-talentos/tabela-pontuacao.png
+    alt: Tabela de pontuação de um aluno, com os critérios em linhas, os meses em colunas e os dias marcados em azul, com a indicação de que cada clique é salvo automaticamente
+  - src: ./../../../assets/projects/feira-de-talentos/evolucao-aluno.png
+    alt: Evolução da pontuação de um aluno, com gráfico de pontos por mês e total acumulado, e um resumo mensal com pontos, quantidade de marcações e acumulado
+  - src: ./../../../assets/projects/feira-de-talentos/dashboard-admin.png
+    alt: Painel do administrador com total de professores e de alunos, média de alunos por professor, gráfico de distribuição por classe e a lista de professores e turmas
+links: {}
+---
+
+## Visão geral
+
+A Feira de Talentos é um projeto de igreja, e fiz este sistema como voluntário. Ela acompanha a
+participação dos alunos ao longo do ano, e cada participação vale pontos. O sistema organiza essa pontuação por classe: o administrador cria as classes e os critérios,
+convida os professores, e cada professor cadastra os alunos da sua turma e marca a pontuação deles
+semana a semana.
+
+Cada perfil tem o próprio painel. O professor vê a evolução da turma e de cada aluno em gráficos, o
+administrador acompanha professores e alunos de todas as classes, e o avaliador pontua os
+professores.
+
+## Decisões técnicas
+
+### A pontuação é uma marcação por dia
+
+Cada critério tem um valor em pontos e um dia da semana em que é preenchido: sábado, quarta ou
+domingo. A tela de pontuação mostra só esses dias no ano, e o professor marca os dias em que o aluno
+cumpriu o critério. Cada clique é salvo na hora. Totais, médias por mês e o acumulado do ano são
+calculados a partir dessas marcações.
+
+> **O que isso custou:** nenhum total fica guardado no banco. Os números são recalculados a cada
+> vez que um painel abre, e o painel do administrador precisa ler a pontuação de todos os alunos
+> para montar os gráficos.
+
+### Cadastro só por convite, com usuário em vez de e-mail
+
+Ninguém cria conta sozinho. O administrador convida o professor pelo nome de usuário e já define a
+classe dele, e o cadastro só é aceito para um usuário convidado. O login é feito com usuário e senha:
+como o Firebase Authentication exige e-mail, o sistema gera um e-mail interno a partir do usuário.
+
+> **O que isso custou:** sem um e-mail real, não existe recuperação de senha por e-mail. Quando
+> alguém esquece a senha, o caminho passa pelo administrador.
+
+### Alunos e professores usam a mesma tabela de pontuação
+
+O avaliador pontua os professores com o mesmo modelo usado para os alunos: critérios com valor, dias
+de preenchimento e marcações salvas por ano. A tela, o cálculo por mês e os gráficos servem para os
+dois casos.
+
+> **O que isso custou:** as duas pontuações ficam presas ao mesmo formato. Uma mudança na forma de
+> pontuar alunos atinge também a avaliação dos professores.
+
+## Resultados e aprendizados
+
+O sistema está em uso na igreja. Os administradores agora acompanham a pontuação dos alunos e dos
+professores num lugar só, e cada professor e avaliador trabalha no próprio painel.

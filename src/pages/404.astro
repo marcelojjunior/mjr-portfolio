@@ -1,0 +1,88 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { useTranslations } from '@/i18n/ui'
+import { localePath, projectsPath } from '@/lib/i18n'
+import { DEFAULT_LOCALE } from '@/config/site'
+
+/**
+ * One 404 for the whole site. Astro serves a single static 404 regardless of the
+ * requested path, so it is written in the default locale with the English line beneath.
+ */
+const locale = DEFAULT_LOCALE
+const t = useTranslations(locale)
+const en = useTranslations('en')
+---
+
+<BaseLayout
+  locale={locale}
+  page={{ kind: 'home' }}
+  title="404 — Marcelo Junior"
+  description={t('notFound.lede')}
+>
+  <section class="nf">
+    <p class="eyebrow">{t('notFound.code')}</p>
+    <h1>{t('notFound.title')}</h1>
+    <p class="nf__lede">{t('notFound.lede')}</p>
+    <p class="nf__en" lang="en">{en('notFound.title')}. {en('notFound.lede')}</p>
+
+    <div class="nf__actions">
+      <a class="nf__btn" href={localePath(locale)}>{t('notFound.home')}</a>
+      <a class="nf__btn nf__btn--ghost" href={projectsPath(locale)}>{t('notFound.work')}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: clamp(3.5rem, 12vh, 8rem) var(--gutter);
+  }
+  .nf h1 {
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    margin-top: 0.5rem;
+    max-width: 14ch;
+  }
+  .nf__lede {
+    font-size: clamp(1rem, 1.4vw, 1.14rem);
+    line-height: 1.6;
+    max-width: 46ch;
+    margin: 1.25rem 0 0;
+  }
+  .nf__en {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--color-dim);
+    max-width: 52ch;
+    margin: 1rem 0 0;
+  }
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 2.25rem;
+  }
+  .nf__btn {
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.8rem 1.375rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast), color var(--dur-fast);
+  }
+  .nf__btn:hover { transform: translateY(-2px); }
+  .nf__btn--ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .nf__btn--ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nf__btn:hover { transform: none; }
+  }
+</style>

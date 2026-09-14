@@ -1,0 +1,128 @@
+---
+import type { Locale } from '@/config/site'
+import { useTranslations } from '@/i18n/ui'
+import { getCases } from '@/lib/projects'
+import { projectsPath } from '@/lib/i18n'
+import CaseCard from '@/components/CaseCard.astro'
+import Timeline from '@/components/Timeline.astro'
+import TechMarquee from '@/components/TechMarquee.astro'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const t = useTranslations(locale)
+const cases = await getCases(locale)
+
+---
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">{t('hero.eyebrow')}</p>
+    <h1>
+      {t('hero.headlineBefore')} <span class="hl">{t('hero.headlineAccent')}</span>{t('hero.headlineAfter') && ` ${t('hero.headlineAfter')}`}
+    </h1>
+
+    <div class="hero__row">
+      <p class="hero__lede">{t('hero.lede')}</p>
+      <div class="hero__cta">
+        <a class="btn" href="#contact">{t('hero.primary')}</a>
+        <a class="btn btn--ghost" href={projectsPath(locale)}>{t('hero.secondary')}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__marquee"><TechMarquee /></div>
+</section>
+
+<section class="sec wrap" id="work">
+  <header class="sec__head">
+    <div>
+      <p class="eyebrow">{t('work.eyebrow')}</p>
+      <h2 class="sec__title">{t('work.title')}</h2>
+    </div>
+  </header>
+
+  <div class="grid">
+    {cases.map((entry) => <CaseCard entry={entry} locale={locale} />)}
+  </div>
+</section>
+
+<section class="sec wrap">
+  <header class="sec__head">
+    <div>
+      <p class="eyebrow">{t('path.eyebrow')}</p>
+      <h2 class="sec__title">{t('path.title')}</h2>
+    </div>
+  </header>
+
+  <Timeline locale={locale} />
+</section>
+
+<style>
+  .hero { padding-top: clamp(1.5rem, 6vw, 4rem); }
+  .hero__marquee { margin-top: var(--section-gap); }
+  .hero h1 {
+    font-size: clamp(2.9rem, 8.2vw, 6.2rem);
+    line-height: 0.95;
+    margin-top: 0.24em;
+    max-width: 13ch;
+  }
+  .hero h1 .hl { color: var(--color-accent); }
+
+  /* One left-aligned spine: eyebrow, name, lede, then the action right under it. */
+  .hero__row {
+    display: grid;
+    gap: 1.75rem;
+    margin-top: 2.125rem;
+    justify-items: start;
+  }
+  .hero__lede {
+    font-size: clamp(1rem, 1.4vw, 1.14rem);
+    line-height: 1.6;
+    max-width: 48ch;
+    margin: 0;
+  }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+
+  .btn {
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.8rem 1.375rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast), color var(--dur-fast);
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .btn--ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+
+  .sec { padding-block: var(--section-gap); }
+  .sec__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.875rem;
+    margin-bottom: 2.125rem;
+  }
+  .sec__title {
+    font-size: clamp(1.9rem, 4.4vw, 3.3rem);
+    margin-top: 0.5rem;
+  }
+
+  .grid { display: grid; gap: 1.125rem; }
+  @media (min-width: 760px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+</style>

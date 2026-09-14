@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import HomeView from '@/components/HomeView.astro'
+import { personSchema, websiteSchema } from '@/lib/jsonld'
+
+const locale = 'en' as const
+---
+
+<BaseLayout
+  locale={locale}
+  page={{ kind: 'home' }}
+  title="Marcelo Junior — Software Engineer"
+  description="Software engineer in São Paulo, working at Soulloop. For five years I have built systems, websites and apps."
+  jsonLd={[personSchema(locale), websiteSchema(locale)]}
+>
+  <HomeView locale={locale} />
+</BaseLayout>

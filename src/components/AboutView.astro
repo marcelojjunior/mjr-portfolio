@@ -1,0 +1,297 @@
+---
+import { Image } from 'astro:assets'
+import { render, type CollectionEntry } from 'astro:content'
+import portrait from '@/assets/portrait.jpeg'
+import { PERSON, JOB_TITLE, PROFILE, type Locale } from '@/config/site'
+import { EXPERIENCE } from '@/config/experience'
+import { SKILL_GROUPS } from '@/config/skills'
+import { iconPath } from '@/lib/icons'
+import { useTranslations } from '@/i18n/ui'
+import { projectsPath } from '@/lib/i18n'
+
+interface Props {
+  entry: CollectionEntry<'pages'>
+  locale: Locale
+}
+
+const { entry, locale } = Astro.props
+const t = useTranslations(locale)
+const { Content } = await render(entry)
+
+const current = EXPERIENCE[0]!
+const groups = SKILL_GROUPS.map((group) => ({
+  ...group,
+  items: group.items.map((tech) => ({ ...tech, path: iconPath(tech.icon) })),
+}))
+
+const facts = [
+  { label: t('about.now'), value: `${current.role[locale]} · ${current.company}` },
+  { label: t('about.based'), value: `${PERSON.location.city}, ${PROFILE.country[locale]}` },
+  {
+    label: t('about.education'),
+    value: `${PROFILE.education.degree[locale]}, ${PROFILE.education.institution}`,
+  },
+  {
+    label: t('about.languages'),
+    value: PROFILE.languages.map((l) => `${l.name[locale]} (${l.level[locale]})`).join(', '),
+  },
+]
+---
+
+<article class="about">
+  <header class="about__head">
+    <p class="eyebrow">{t('about.eyebrow')}</p>
+    <h1>{PERSON.name}</h1>
+    <p class="about__role">{JOB_TITLE[locale]}</p>
+  </header>
+
+  <div class="about__grid">
+    <div class="about__prose">
+      <Content />
+    </div>
+
+    <aside class="about__side">
+      <figure class="portrait">
+        <Image src={portrait} alt={t('about.portraitAlt')} widths={[320, 640]} sizes="(min-width: 900px) 17rem, 100vw" />
+      </figure>
+
+      <dl class="facts">
+        {facts.map((fact) => (
+          <div>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
+  </div>
+
+  <section class="skills">
+    <h2>{t('about.skillsTitle')}</h2>
+    <dl>
+      {groups.map((group) => (
+        <div class="skills__group">
+          <dt>{group.label[locale]}</dt>
+          <dd>
+            <ul>
+              {group.items.map((tech) => (
+                <li>
+                  {tech.path && (
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                      <path d={tech.path} />
+                    </svg>
+                  )}
+                  {tech.label}
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="next">
+    <div>
+      <h2>{t('about.workTitle')}</h2>
+      <p>{t('work.title')}</p>
+    </div>
+    <a class="next__cta" href={projectsPath(locale)}>
+      {t('about.workCta')} <span aria-hidden="true">→</span>
+    </a>
+  </section>
+</article>
+
+<style>
+  .about {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: clamp(2rem, 6vw, 4rem) var(--gutter) 0;
+  }
+
+  .about__head h1 {
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    margin-top: 0.5rem;
+  }
+  .about__role {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0.9rem 0 0;
+  }
+
+  .about__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .about__grid > * {
+    min-width: 0;
+  }
+
+  /* Below two columns the portrait and the facts come first, so a phone shows who
+     this is before the reading starts. */
+  .about__prose { order: 2; }
+  .about__side { order: 1; }
+  @media (min-width: 900px) {
+    .about__grid { grid-template-columns: minmax(0, 1fr) 17rem; align-items: start; }
+  }
+
+  .about__prose {
+    font-size: 1.06rem;
+    line-height: 1.75;
+    max-width: 62ch;
+  }
+  .about__prose :global(p) { margin: 0 0 1.25em; }
+  .about__prose :global(p:first-child) {
+    font-size: 1.28rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+  .about__prose :global(strong) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .about__side {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  @media (max-width: 899px) {
+    /* A full-width 4:5 portrait would fill a phone screen on its own. */
+    .about__side { justify-items: start; }
+    .portrait { width: min(14rem, 55%); }
+  }
+  @media (min-width: 560px) and (max-width: 899px) {
+    .about__side {
+      grid-template-columns: min(14rem, 35%) minmax(0, 1fr);
+      align-items: start;
+    }
+    .portrait { width: 100%; }
+  }
+  @media (min-width: 900px) {
+    .about__prose { order: 0; }
+    .about__side {
+      order: 0;
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+  }
+
+  .portrait {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-sunken);
+  }
+  .portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 32%;
+    display: block;
+  }
+
+  .facts { margin: 0; display: grid; gap: 1rem; }
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .facts dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  .skills { margin-top: clamp(3rem, 7vw, 5rem); }
+  .skills h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+  }
+  .skills dl {
+    margin: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .skills__group {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+  @media (min-width: 700px) {
+    .skills__group {
+      grid-template-columns: 13rem minmax(0, 1fr);
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+  }
+  .skills dt {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .skills dd { margin: 0; }
+  .skills ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .skills li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    color: var(--color-ink);
+  }
+  .skills svg { color: var(--color-accent); }
+
+  .next {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: var(--color-sunken);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .next h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); }
+  .next p { color: var(--color-dim); margin: 0.6rem 0 0; max-width: 46ch; }
+  .next__cta {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    white-space: nowrap;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .next__cta:hover { transform: translateY(-2px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .next__cta:hover { transform: none; }
+  }
+</style>

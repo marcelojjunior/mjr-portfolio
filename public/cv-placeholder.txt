@@ -1,2 +1,0 @@
-Replace this file with your real CV as cv.pdf in this folder.
-The site links to /cv.pdf from the hero section.

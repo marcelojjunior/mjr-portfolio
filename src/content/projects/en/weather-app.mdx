@@ -1,0 +1,63 @@
+---
+title: Weather App
+summary: 'A weather forecast app for iOS and Android, with search for any city in the world, current conditions and the forecast for the coming days.'
+role: Sole developer
+period: August 2025
+kind: Mobile app
+stack: ['React Native', TypeScript, 'React Navigation', Axios, AsyncStorage, NetInfo, NativeWind]
+tags: ['React Native', TypeScript, NativeWind, Axios, AsyncStorage]
+preview: frames
+cover: ./../../../assets/projects/weather-app/clima-transparente.png
+images:
+  - src: ./../../../assets/projects/weather-app/clima-transparente.png
+    alt: Two app screens side by side. On the left, São Paulo by day with a blue sky, 14 degrees and sunny; on the right, Tokyo at night on a dark background, 27 degrees and partly cloudy, each with wind, humidity, rain chance and the forecast for the coming days
+  - src: ./../../../assets/projects/weather-app/busca-transparente.png
+    alt: Three city selection screens. The recent cities list with a clear option, the search showing suggestions as someone types "Bu", and the notice that an internet connection is needed to search
+  - src: ./../../../assets/projects/weather-app/telas-transparente.png
+    alt: Three app screens side by side, with the current weather in São Paulo, the city search with suggestions, and the no internet connection notice
+links:
+  repo: https://github.com/marcelojjunior/weather-app
+---
+
+## Overview
+
+Weather App is a learning project I built to learn React Native, inspired by the Weather app Apple
+ships on the iPhone. It is a weather forecast app for
+iOS and Android: you search for any city in the world and see the current temperature, the
+conditions, wind, humidity, rain chance and the forecast for the coming days.
+
+The data comes from <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">WeatherAPI</a>. Searched cities are saved on the device, and the app tells you when
+there is no internet connection.
+
+## Technical decisions
+
+### The background follows the weather and the time of day
+
+The main screen changes its background image according to the conditions and whether it is day or
+night in the selected city. WeatherAPI's condition codes are grouped into rain, clouds and clear
+sky, and each group has a day and a night version.
+
+> **What it cost:** the code grouping was written by hand. A condition that is not in any group
+> falls back to the default background, so the list has to keep up with the codes the API returns.
+
+### Search waits for you to stop typing
+
+City search only queries the API half a second after the last keystroke. Without that wait, every
+letter typed would become a request. Chosen cities go into a recent list stored on the device
+itself, with up to six cities and no duplicates.
+
+> **What it cost:** suggestions appear half a second after you stop typing. And recent cities stay
+> on that one device, with no sync to another.
+
+### No connection is a screen state
+
+The app watches the connection the whole time. When it drops, the city screen shows its own notice
+saying an internet connection is needed to search, instead of a generic error message.
+
+> **What it cost:** the app does not keep the last forecast it fetched. Offline, it explains what
+> happened but shows no weather for any city.
+
+## Results and lessons
+
+The same code runs on iOS and Android, with city search, recent cities saved on the device and the
+no-connection handling working on both platforms.
