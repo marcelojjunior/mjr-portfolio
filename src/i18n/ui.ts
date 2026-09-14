@@ -22,7 +22,7 @@ export const ui = {
     'hero.secondary': 'Ver projetos',
 
     'work.eyebrow': 'Projetos',
-    'work.title': 'Alguns dos projetos que construí, e as decisões por trás deles.',
+    'work.title': 'Projetos que construí e outros de que participei, e as decisões por trás deles.',
     'work.listTitle': 'O que eu construí',
     'work.open': 'Ver projeto',
 
@@ -37,6 +37,8 @@ export const ui = {
     'case.live': 'Visitar site',
     'case.repo': 'Repositório',
     'case.repoPrivate': 'privado',
+    'case.company': 'Empresa',
+    'case.companyCase': 'Case na',
     'case.outcome': 'Em números',
     'case.back': 'Todos os projetos',
     'case.placeholderNote': 'Números marcados como rascunho até o cliente liberar.',
@@ -93,7 +95,7 @@ export const ui = {
     'hero.secondary': 'See the projects',
 
     'work.eyebrow': 'Projects',
-    'work.title': 'A few of the projects I built, and the decisions behind them.',
+    'work.title': 'Projects I built and others I worked on, and the decisions behind them.',
     'work.listTitle': 'What I have built',
     'work.open': 'View project',
 
@@ -108,6 +110,8 @@ export const ui = {
     'case.live': 'View live',
     'case.repo': 'Repository',
     'case.repoPrivate': 'private',
+    'case.company': 'Company',
+    'case.companyCase': 'Case on',
     'case.outcome': 'In numbers',
     'case.back': 'All projects',
     'case.placeholderNote': 'Figures marked as draft until the client clears them.',

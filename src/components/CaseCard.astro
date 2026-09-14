@@ -14,7 +14,7 @@ interface Props {
 const { entry, locale } = Astro.props
 const t = useTranslations(locale)
 const slug = slugOf(entry)
-const { title, summary, tags, cover, images, kind } = entry.data
+const { title, summary, tags, cover, images, kind, company } = entry.data
 
 /**
  * Resting frame first, then up to three more that crossfade while the pointer is on the card.
@@ -31,7 +31,7 @@ const href = projectPath(locale, slug)
 
 <a class="card" href={href} data-cursor-grow>
   <div class="card__media">
-    <span class="card__badge">{kind}</span>
+    <span class="card__badge">{company ? `${kind} · ${company.name}` : kind}</span>
 
     {frames.length > 0 ? (
       <div class="shots">

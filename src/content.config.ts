@@ -43,10 +43,21 @@ const caseSchema = ({ image }: SchemaContext) =>
         }),
       )
       .default([]),
+    /**
+     * Set when the Project belongs to a company Marcelo worked for, not to him. The card badge,
+     * the sidecar and the JSON-LD all say so; `links.case` points at the company's own case page.
+     */
+    company: z
+      .object({
+        name: z.string(),
+        url: z.url(),
+      })
+      .optional(),
     links: z
       .object({
         live: z.url().optional(),
         repo: z.url().optional(),
+        case: z.url().optional(),
       })
       .default({}),
     /** Set false to keep a Case in the repo but off the site. */

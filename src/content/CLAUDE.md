@@ -44,6 +44,15 @@ that was built.
 differently. The lesson is the one part that cannot be read out of the repository. Ask him for it;
 never write one for him.
 
+### Company Projects
+
+A Project built while employed (it belongs to the company, not to Marcelo) sets `company` in
+frontmatter and `links.case` to the company's own case page. It keeps the same three sections, with
+two changes: **Visão geral** says whose project it is and what Marcelo's part was, and
+**Decisões técnicas** only holds decisions Marcelo made or implemented himself. When he did not make
+any, that section is replaced by `## Minha participação` / `## My part`, which describes the work
+without a cost blockquote. Never borrow the company's claims as his; attribute them.
+
 Headings start at `##`. The page already renders the title as the `h1`, so a `###` directly under it
 would skip a level and break the document outline.
 

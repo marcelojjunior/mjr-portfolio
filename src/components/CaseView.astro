@@ -15,7 +15,7 @@ interface Props {
 const { entry, locale } = Astro.props
 const t = useTranslations(locale)
 const { Content } = await render(entry)
-const { title, period, kind, stack, images, outcomes, links, summary, video, cover } = entry.data
+const { title, period, kind, stack, images, outcomes, links, summary, video, cover, company, role } = entry.data
 const hasPlaceholder = outcomes.some((o) => o.placeholder)
 ---
 
@@ -53,6 +53,18 @@ const hasPlaceholder = outcomes.some((o) => o.placeholder)
     </div>
 
     <aside class="sidecar">
+      {company && (
+        <>
+          <div>
+            <h2>{t('case.company')}</h2>
+            <p><a href={company.url} rel="noopener" target="_blank">{company.name} ↗</a></p>
+          </div>
+          <div>
+            <h2>{t('case.role')}</h2>
+            <p>{role}</p>
+          </div>
+        </>
+      )}
       <div>
         <h2>{t('case.period')}</h2>
         <p>{period}</p>
@@ -65,9 +77,10 @@ const hasPlaceholder = outcomes.some((o) => o.placeholder)
       </div>
       <div>
         <h2>{t('case.links')}</h2>
+        {links.case && company && <p><a href={links.case} rel="noopener" target="_blank">{t('case.companyCase')} {company.name} ↗</a></p>}
         {links.live && <p><a href={links.live} rel="noopener" target="_blank">{t('case.live')} ↗</a></p>}
         {links.repo && <p><a href={links.repo} rel="noopener" target="_blank">{t('case.repo')} ↗</a></p>}
-        {!links.live && !links.repo && <p class="muted">{t('case.repoPrivate')}</p>}
+        {!links.live && !links.repo && !links.case && <p class="muted">{t('case.repoPrivate')}</p>}
       </div>
     </aside>
   </div>

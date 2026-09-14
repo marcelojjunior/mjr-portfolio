@@ -48,10 +48,12 @@ type CaseSchemaInput = {
   summary: string
   stack: string[]
   period: string
+  company?: { name: string; url: string }
 }
 
 /** One CreativeWork per Case, tied back to the Person that built it. */
-export function caseSchema({ locale, path, title, summary, stack, period }: CaseSchemaInput) {
+export function caseSchema({ locale, path, title, summary, stack, period, company }: CaseSchemaInput) {
+  const person = { '@id': `${SITE_URL}/#person` }
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
@@ -62,6 +64,9 @@ export function caseSchema({ locale, path, title, summary, stack, period }: Case
     inLanguage: LOCALE_TAGS[locale],
     dateCreated: period,
     keywords: stack.join(', '),
-    author: { '@id': `${SITE_URL}/#person` },
+    // A company Project is credited to the company; Marcelo is a contributor, not its author.
+    ...(company
+      ? { author: { '@type': 'Organization', name: company.name, url: company.url }, contributor: person }
+      : { author: person }),
   }
 }

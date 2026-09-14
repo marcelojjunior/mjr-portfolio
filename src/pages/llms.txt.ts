@@ -25,6 +25,7 @@ export const GET: APIRoute = async () => {
         `### ${c.data.title}`,
         `URL: ${abs(projectPath('en', slugOf(c)))}`,
         `Role: ${c.data.role} · ${c.data.period} · ${c.data.kind}`,
+        ...(c.data.company ? [`Built at ${c.data.company.name}; the project belongs to the company.`] : []),
         `Stack: ${c.data.stack.join(', ')}`,
         c.data.summary,
       ].join('\n'),

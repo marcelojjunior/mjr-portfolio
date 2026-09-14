@@ -71,4 +71,5 @@ export const PROJECT_ORDER = [
   'vm-fight',
   'feira-de-talentos',
   'weather-app',
+  'aese',
 ] as const

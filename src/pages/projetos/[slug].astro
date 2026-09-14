@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const locale = 'pt' as const
 const { entry } = Astro.props
 const slug = slugOf(entry)
-const { title, summary, stack, period } = entry.data
+const { title, summary, stack, period, company } = entry.data
 ---
 
 <BaseLayout
@@ -23,7 +23,7 @@ const { title, summary, stack, period } = entry.data
   description={summary}
   jsonLd={[
     personSchema(locale),
-    caseSchema({ locale, path: projectPath(locale, slug), title, summary, stack, period }),
+    caseSchema({ locale, path: projectPath(locale, slug), title, summary, stack, period, company }),
   ]}
 >
   <CaseView entry={entry} locale={locale} />
