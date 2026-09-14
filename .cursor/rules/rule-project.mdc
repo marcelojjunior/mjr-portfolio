@@ -6,11 +6,10 @@ alwaysApply: true
 The authoritative rules for this repository live in Markdown files, not here. Read them before
 changing anything:
 
-- `CLAUDE.md` — stack, commands, architecture rules, and the English-only artefact rule
+- `CLAUDE.md` — stack, commands, architecture rules, routing and required SEO per page, and the English-only artefact rule
 - `CONTEXT.md` — domain vocabulary (Project, Case, Decision, Outcome, Locale, Island, Token)
 - `src/content/CLAUDE.md` — how to write a Case, tone of voice, locale parity
 - `src/components/CLAUDE.md` — Astro vs React islands, tokens, the motion vocabulary
-- `src/pages/CLAUDE.md` — routing, i18n URLs, required SEO on every page
 - `docs/adr/` — why the architecture is the way it is
 
 This file exists only to point at those. Do not duplicate rules here; a second source of truth will

@@ -1,4 +1,8 @@
-export const SITE_URL = 'https://marcelojunior.dev'
+/**
+ * Canonical origin. www is the primary domain in Vercel; the apex and the vercel.app
+ * domain redirect to it at the domain level, so no redirect lives in vercel.json.
+ */
+export const SITE_URL = 'https://www.marcelojunior.dev'
 
 export const LOCALES = ['pt', 'en'] as const
 export type Locale = (typeof LOCALES)[number]
@@ -32,6 +36,29 @@ export const PERSON = {
   github: 'https://github.com/marcelojjunior',
   linkedin: 'https://www.linkedin.com/in/marcelojjunior',
 } as const
+
+/**
+ * Profile facts shown on the about page and repeated in llms.txt and the Person JSON-LD.
+ * Change a fact here, never in a string in one of those three places, so they cannot drift.
+ */
+export const PROFILE = {
+  country: { pt: 'Brasil', en: 'Brazil' } as Record<Locale, string>,
+  hometown: 'Maranhão',
+  /** First professional role; years of experience are counted from here. */
+  careerStartYear: 2021,
+  education: {
+    institution: 'UNIBALSAS - Faculdade de Balsas',
+    degree: { pt: 'Sistemas de Informação', en: 'BSc in Information Systems' } as Record<Locale, string>,
+    startYear: 2018,
+    endYear: 2022,
+  },
+  languages: [
+    { name: { pt: 'Português', en: 'Portuguese' }, level: { pt: 'nativo', en: 'native' } },
+    { name: { pt: 'Inglês', en: 'English' }, level: { pt: 'intermediário', en: 'intermediate' } },
+  ] as { name: Record<Locale, string>; level: Record<Locale, string> }[],
+}
+
+export const yearsOfExperience = (now = new Date()) => now.getFullYear() - PROFILE.careerStartYear
 
 /**
  * Display order on the home grid. Single source of truth: a Project not listed here is

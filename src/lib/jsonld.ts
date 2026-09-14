@@ -1,4 +1,6 @@
-import { PERSON, JOB_TITLE, SITE_URL, LOCALE_TAGS, type Locale } from '@/config/site'
+import { PERSON, JOB_TITLE, PROFILE, SITE_URL, LOCALE_TAGS, type Locale } from '@/config/site'
+import { EXPERIENCE } from '@/config/experience'
+import { SKILL_GROUPS } from '@/config/skills'
 import { localePath } from '@/lib/i18n'
 
 const abs = (path: string) => new URL(path, SITE_URL).href
@@ -20,6 +22,10 @@ export function personSchema(locale: Locale) {
     },
     sameAs: [PERSON.github, PERSON.linkedin],
     knowsLanguage: Object.values(LOCALE_TAGS),
+    // EXPERIENCE is ordered newest first, so the first entry is the current employer.
+    worksFor: { '@type': 'Organization', name: EXPERIENCE[0]!.company },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: PROFILE.education.institution },
+    knowsAbout: [...new Set(SKILL_GROUPS.flatMap((group) => group.items.map((item) => item.label)))],
   }
 }
 

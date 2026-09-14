@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 import { render, type CollectionEntry } from 'astro:content'
 import portrait from '@/assets/portrait.jpeg'
-import { PERSON, JOB_TITLE, type Locale } from '@/config/site'
+import { PERSON, JOB_TITLE, PROFILE, type Locale } from '@/config/site'
 import { EXPERIENCE } from '@/config/experience'
 import { SKILL_GROUPS } from '@/config/skills'
 import { iconPath } from '@/lib/icons'
@@ -26,9 +26,15 @@ const groups = SKILL_GROUPS.map((group) => ({
 
 const facts = [
   { label: t('about.now'), value: `${current.role[locale]} · ${current.company}` },
-  { label: t('about.based'), value: `${PERSON.location.city}, Brasil` },
-  { label: t('about.education'), value: t('about.educationValue') },
-  { label: t('about.languages'), value: t('about.languagesValue') },
+  { label: t('about.based'), value: `${PERSON.location.city}, ${PROFILE.country[locale]}` },
+  {
+    label: t('about.education'),
+    value: `${PROFILE.education.degree[locale]}, ${PROFILE.education.institution}`,
+  },
+  {
+    label: t('about.languages'),
+    value: PROFILE.languages.map((l) => `${l.name[locale]} (${l.level[locale]})`).join(', '),
+  },
 ]
 ---
 

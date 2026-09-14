@@ -1,6 +1,6 @@
 # mjr-portfolio
 
-Personal portfolio of [Marcelo Junior](https://marcelojunior.dev) — full stack developer.
+Personal portfolio of [Marcelo Junior](https://www.marcelojunior.dev) — full stack developer.
 
 Statically rendered with Astro, bilingual (Portuguese at the root, English under `/en/`), with a
 dedicated case page per project.

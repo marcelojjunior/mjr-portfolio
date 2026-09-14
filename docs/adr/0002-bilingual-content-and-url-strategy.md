@@ -15,5 +15,5 @@ Content lives in Astro content collections as one MDX file per Project per Local
 ## Consequences
 
 - The previous `ProjectItem` shape — `nameKey` / `descriptionKey` / `impactPath` pointing into an i18n dictionary — is replaced entirely. Case fields become typed frontmatter; prose becomes the MDX body. Missing content becomes a build error instead of an empty string on the page.
-- The canonical host is the apex `marcelojunior.dev`; `www` and `marcelojunior.vercel.app` redirect to it. Every canonical, `hreflang`, sitemap entry and OG URL must use the apex form.
+- The canonical host is `www.marcelojunior.dev`, the primary domain in Vercel. The apex and `marcelojunior.vercel.app` redirect to it through Vercel's domain settings, not through `vercel.json`, so there is a single place where host routing is decided. Every canonical, `hreflang`, sitemap entry and OG URL must use the `www` form. (The first draft of this ADR chose the apex; it was reversed before launch to match the existing Vercel setup.)
 - Locale is never chosen by automatic redirect. An English-preferring browser is offered a visible invitation to switch; the choice stays with the visitor and with the crawler.

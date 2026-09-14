@@ -47,6 +47,73 @@ Do not bump it to 7 to "fix" a warning.
 | `src/lib/jsonld.ts` | Structured data builders |
 | `src/styles/global.css` | Design tokens — the only place a colour is defined |
 
+## Pages and routes
+
+These rules live here, not in `src/pages/CLAUDE.md`: Astro turns every `.md` file inside
+`src/pages/` into a public route, so a guidance file there was being served at `/CLAUDE` and listed
+in the sitemap. Never put a Markdown or MDX file in `src/pages/` unless it is meant to be a page.
+
+### Route shape
+
+Portuguese is served from the root; English is prefixed. Segments are translated, Project slugs are
+not.
+
+| Page | pt | en |
+| --- | --- | --- |
+| Home | `/` | `/en/` |
+| Project listing | `/projetos` | `/en/projects` |
+| Case | `/projetos/[slug]` | `/en/projects/[slug]` |
+| About | `/sobre` | `/en/about` |
+
+A page file is a thin wrapper: read content, build metadata, hand it to `BaseLayout`. Layout and
+markup belong in `src/components/`. The pt and en files for one page stay in lockstep — changing one
+without the other breaks `hreflang`.
+
+### Every page must
+
+- Pass a `page` ref (`{ kind: 'home' | 'projects' | 'about' }` or `{ kind: 'project', slug }`) to `BaseLayout`.
+  This is what produces the canonical URL and the reciprocal `hreflang` pair. A wrong `page` ref
+  silently points `hreflang` at the wrong twin.
+- Pass a `title` and a `description` written for that page. Never reuse the site-wide description.
+- Include the relevant JSON-LD from `src/lib/jsonld.ts`. Every page carries `personSchema`; a Case
+  also carries `caseSchema`.
+
+### The canonical host
+
+`https://www.marcelojunior.dev`, with `www`. It is set once as `SITE_URL` in `src/config/site.ts`.
+The apex and `marcelojunior.vercel.app` redirect to it in Vercel's domain settings. Do not add a
+host redirect to `vercel.json`: it would fight the domain-level redirect and loop. Never write an
+absolute URL by hand.
+
+### Generated routes
+
+- `robots.txt.ts` and `llms.txt.ts` are endpoints, not static files in `public/`.
+- The sitemap is produced by `@astrojs/sitemap` with the i18n map configured in `astro.config.mjs`,
+  so it always matches the pages the build emits.
+
+### Keeping llms.txt and JSON-LD current
+
+`llms.txt`, the Person JSON-LD and the about page facts panel all read the same sources, and must
+keep doing so:
+
+| Fact | Source |
+| --- | --- |
+| Name, e-mail, city, GitHub, LinkedIn | `PERSON` in `src/config/site.ts` |
+| Job title | `JOB_TITLE` in `src/config/site.ts` |
+| Hometown, education, languages, years of experience | `PROFILE` in `src/config/site.ts` |
+| Current employer and experience | `src/config/experience.ts` (newest first) |
+| Technical skills | `src/config/skills.ts` |
+| Projects | `PROJECT_ORDER` and the MDX in `src/content/projects/` |
+
+Rules:
+
+- Change a fact in its source, never as a string inside `llms.txt.ts`, `jsonld.ts` or a component.
+  If a new fact has no source yet, add it to one of the files above first.
+- Whenever a change touches personal data, experience, skills or projects, run `pnpm build` and read
+  `dist/llms.txt` and the `application/ld+json` block in `dist/sobre/index.html` before committing.
+- Prose is the exception: the about text, the hero lede and the home meta description are written
+  by hand and repeat some of these facts ("cinco anos", Soulloop). Update them in the same change.
+
 ## Writing content
 
 Every word a visitor reads passes two skills in `.claude/skills/` before it is written to a file:
